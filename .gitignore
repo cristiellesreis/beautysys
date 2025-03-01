@@ -1,0 +1,35 @@
+# Ignorar a pasta do ambiente virtual
+venv/
+
+# Ignorar arquivos de banco de dados SQLite (caso ainda use localmente)
+*.sqlite3
+db.sqlite3
+
+# Ignorar arquivos compilados do Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Ignorar arquivos de configuração sensíveis
+.env
+*.env
+settings_local.py
+
+# Ignorar logs e caches
+*.log
+logs/
+*.out
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos do MySQL Workbench (caso crie dump do banco)
+*.sql
+
+# Ignorar arquivos específicos do VSCode
+.vscode/
+
+# Ignorar configurações do PyCharm (caso use)
+.idea/
