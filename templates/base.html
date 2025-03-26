@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeautySys</title>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="#" alt="Foto de Perfil">
+            <div>
+                <p>Nome</p>
+                <p>Email</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'home' %}">Dashboard</a>
+                </li>
+                <li>
+                    <a href=#>Perfil</a>
+                </li>
+                <li>
+                    <a href=#>Agendamentos</a>
+                </li>
+                <li>
+                    <a href=#>Finanças</a>
+                </li>
+                <li>
+                    <a href=#>Estoque</a>
+                </li>
+            </ul>
+        </nav>
+        <button>Sair</button>
+    </header>
+    <div>
+        <button>Noturno/Diúrno</button>
+    </div>
+    {% block conteudo %}
+    
+    {% endblock %}
+</body>
+</html>
