@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'setup',
     'app_home',
     'app_cadastro_usuario',
+    'app_agendamento',
+    'app_financas',
+    'app_estoque',
 ]
 
 MIDDLEWARE = [
