@@ -1,5 +1,6 @@
 ﻿from django.urls import path
+from app_agendamento.views import *
 
 urlpatterns = [
-    # Adicione suas rotas aqui
+    path('', agendamento, name='agendamento')
 ]

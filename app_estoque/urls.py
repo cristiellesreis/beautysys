@@ -1,5 +1,6 @@
 ﻿from django.urls import path
+from app_estoque.views import *
 
 urlpatterns = [
-    # Adicione suas rotas aqui
+    path('', estoque, name='estoque')
 ]

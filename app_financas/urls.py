@@ -1,5 +1,6 @@
 ﻿from django.urls import path
+from app_financas.views import *
 
 urlpatterns = [
-    # Adicione suas rotas aqui
+    path('', financas, name='financas')
 ]
