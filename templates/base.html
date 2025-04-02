@@ -1,45 +1,79 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-bs-core="modern" data-bs-theme="light">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BeautySys</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeautySys</title>
+  <script src="https://kit.fontawesome.com/b144170c7e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/halfmoon.min.css" rel="stylesheet" integrity="sha256-RjeFzczeuZHCyS+Gvz+kleETzBF/o84ZRHukze/yv6o=" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/cores/halfmoon.modern.css" rel="stylesheet" integrity="sha256-DD6elX+jPmbFYPsGvzodUv2+9FHkxHlVtQi0/RJVULs=" crossorigin="anonymous">
 </head>
-<body>
-    <header>
-        <div>
-            <img src="#" alt="Foto de Perfil">
-            <div>
-                <p>Nome</p>
-                <p>Email</p>
-            </div>
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="{% url 'home' %}">Dashboard</a>
-                </li>
-                <li>
-                    <a href=#>Perfil</a>
-                </li>
-                <li>
-                    <a href="{% url 'agendamento' %}">Agendamentos</a>
-                </li>
-                <li>
-                    <a href="{% url 'financas' %}">Finanças</a>
-                </li>
-                <li>
-                    <a href="{% url 'estoque' %}">Estoque</a>
-                </li>
-            </ul>
-        </nav>
-        <button>Sair</button>
-    </header>
-    <div>
-        <button>Noturno/Diúrno</button>
+
+<body class="ps-md-sbwidth">
+  <!-- Sidebar -->
+  <nav class="sidebar offcanvas-start offcanvas-md bg-light-subtle border border-0" tabindex="-1" id="sidebar-example">
+    <div class="offcanvas-header d-flex justify-content-end">
+      <button type="button" class="btn-close d-lg-none ms-1" data-bs-dismiss="offcanvas" data-bs-target="#sidebar-example" aria-label="Close"></button>
     </div>
-    {% block conteudo %}
-    
-    {% endblock %}
+    <div class="d-flex justify-content-center">
+      <a class="sidebar-brand" href="#">
+        <img src="/static/img/logotipo.png" alt="Logo" class="d-inline-block align-text-center">
+      </a>
+    </div>
+
+    <div class="offcanvas-body">
+      <div class="text-center p-3 mb-4">
+          <img src="https://www.forummodel.com.br/wp-content/webp-express/webp-images/uploads/2022/08/modelos-adulto-aprovado-1.jpeg.webp" 
+            alt="Usuário" class="rounded-circle d-block mx-auto" width="150" height="150">
+          <p class="fs-lg mt-2 fs-5">Nome do Usuário</p>
+          <button id="darkModeToggle" class="btn btn-secondary">
+            <i class="fa fa-moon"></i>
+          </button>
+      </div>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item mb-4">
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
+        </li>
+        <li class="nav-item mb-4">
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="javascript:alert('Ainda não tem a app')" aria-current="page">Perfil</a>
+        </li>
+        <li class="nav-item mb-4">
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
+        </li>
+        <li class="nav-item mb-4">
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page">Finanças</a>
+        </li>
+        <li class="nav-item mb-4">
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow rounded-1" href="{% url 'estoque' %}" aria-current="page">Estoque</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Navebar -->
+  <nav class="navbar navbar-expand-lg border-bottom border-primary border-opacity-10">
+    <div class="container-fluid d-flex justify-content-end">
+      <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-example" class="btn btn-secondary d-md-none me-2">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a href="#" class="btn text-decoration-none fs-5">
+        <i class="fa fa-sign-out-alt"></i> sair
+      </a>  
+    </div>
+  </nav>
+  <main>
+    <div class="content-wrapper">
+
+      {% block conteudo %}
+
+      {% endblock %}
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
