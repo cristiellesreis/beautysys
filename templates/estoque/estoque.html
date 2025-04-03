@@ -1,3 +1,60 @@
 {% extends 'base.html' %}
 {% block conteudo %}
+    <div>
+        <h3>Estoque de Produtos</h3>
+    </div>
+    <div>
+        <div>
+            <span><input type="search" placeholder="Pesquisar" id=""></span>
+            <button>Filtrar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_botao_novo">Novo</button>
+        </div>
+        
+        <form action="{% url 'adicionar_item_estoque' %}" method="post">
+            {% csrf_token %}
+            <div class="modal fade" id="modal_botao_novo" tabindex="-1" role="dialog" aria-labelledby="#modal_botao_novo" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="TituloModalCentralizado">Adicionar item ao estoque</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ form.as_p }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar mudanças</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        {% if itens_estoque %}
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Entrada</th>
+                <th>Quantidade</th>
+                <th>Editar</th>
+                <th>Deletar</th>
+            </tr>
+            {% for item in itens_estoque%}
+            <tr>
+                <td>{{item.item}}</td>
+                <td>{{item.entrada_estoque}}</td>
+                <td>{{item.quantidade}}</td>
+                <td><button>Editar</button></td>
+                <td><button>Deletar</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Insira um item no estoque</p>
+        {% endif %}
+        
+    </div>
 {% endblock %}
