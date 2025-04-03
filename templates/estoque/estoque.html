@@ -45,7 +45,7 @@
             {% for item in itens_estoque%}
             <tr>
                 <td>{{item.item}}</td>
-                <td>{{item.entrada_estoque}}</td>
+                <td>{{item.entrada_no_estoque|date:"d/m/Y"}}</td>
                 <td>{{item.quantidade}}</td>
                 <td><button>Editar</button></td>
                 <td><button>Deletar</button></td>
