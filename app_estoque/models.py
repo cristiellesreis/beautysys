@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class Item_Estoque(models.Model):
+    item = models.CharField(max_length=50)
+    entrada_no_estoque = models.DateTimeField(auto_now_add=True)
+    quantidade = models.IntegerField()
+
+    
