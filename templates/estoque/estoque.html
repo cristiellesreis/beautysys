@@ -48,10 +48,46 @@
                                     <button class="btn btn-sm"><i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i></button>
                                 </td>
                                 <td data-label="Excluir" class="text-end w-auto">
-                                    <button class="btn btn-sm"><i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i></button>
+                                    <button 
+                                    class="btn btn-sm btn-excluir" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalExcluir{{ item.pk }}"
+                                    data-id="{{ item.pk }}"
+                                    data-nome="{{ item.item }}">
+                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                  </button>
                                 </td>
                             </tr>
-                        {% endfor %}
+                            <div class="modal fade" id="modalExcluir{{ item.pk }}" tabindex="-1" aria-labelledby="modalExcluirLabel{{ item.pk }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <form method="POST" action="{% url 'remove_item_estoque' item.pk %}">
+                                      {% csrf_token %}
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="modalExcluirLabel{{ item.pk }}">Excluir {{ item.item }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <label for="quantidade{{ item.pk }}">Quantas unidades deseja excluir?</label>
+                                        <input 
+                                          type="number" 
+                                          name="quantidade" 
+                                          id="quantidade{{ item.pk }}" 
+                                          min="1" 
+                                          max="{{ item.quantidade }}" 
+                                          class="form-control" 
+                                          required
+                                        >
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                        {% endfor %}     
                     </tbody>
                 </table>
             </div>

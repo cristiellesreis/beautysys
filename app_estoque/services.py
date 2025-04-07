@@ -1,4 +1,6 @@
 from .models import Item_Estoque
+from .exceptions import QuantidadeInsuficiente
+from django.shortcuts import get_object_or_404
 
 class EstoqueService:
     @staticmethod
@@ -11,3 +13,17 @@ class EstoqueService:
             item=nome,
             quantidade=quantidade,
             )
+        
+    @staticmethod
+    def remover_item(request,pk, quantidade):
+        item = get_object_or_404(Item_Estoque, pk=pk)
+        if quantidade > item.quantidade:
+            raise QuantidadeInsuficiente(
+                f'Estoque insuficente, disponivel: {item.quantidade}'
+            )
+        else:
+            item.quantidade -= quantidade
+            if item.quantidade == 0:
+                item.delete()
+            else:
+                item.save()
