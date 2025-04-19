@@ -38,7 +38,7 @@
             <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="javascript:alert('Ainda não tem a app')" aria-current="page">Perfil</a>
+            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page">Perfil</a>
         </li>
         <li class="nav-item mb-4">
             <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
@@ -71,6 +71,30 @@
       {% endblock %}
 
     </div>
+
+    <!-- Modal de confirmação de remoção -->
+    <div class="modal fade" id="modal-remocao" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <form method="POST" id="form-remocao" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-title-7">
+                        Confirmação
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja remover <strong id="nome-item"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Sim</button>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
