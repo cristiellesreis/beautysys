@@ -19,9 +19,7 @@
       <button type="button" class="btn-close d-lg-none ms-1" data-bs-dismiss="offcanvas" data-bs-target="#sidebar-example" aria-label="Close"></button>
     </div>
     <div class="d-flex justify-content-center">
-      <a class="sidebar-brand" href="#">
-        <img src="/static/img/logotipo.png" alt="Logo" class="d-inline-block align-text-center">
-      </a>
+      <a class="sidebar-brand" href="#">BeautySys</a>
     </div>
 
     <div class="offcanvas-body">
@@ -33,25 +31,26 @@
             <i class="fa fa-moon"></i>
           </button>
       </div>
-      <ul class="nav nav-pills flex-column">
+      <ul class="nav nav-pills flex-column w-75 mx-auto">
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
+            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page">Perfil</a>
+            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page">Perfil</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
+            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page">Finanças</a>
+            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page">Finanças</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-white text-dark-emphasis fs-5 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page">Estoque</a>
+            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page">Estoque</a>
         </li>
       </ul>
     </div>
   </nav>
+
   <!-- Navebar -->
   <nav class="navbar navbar-expand-lg border-bottom border-primary border-opacity-10">
     <div class="container-fluid d-flex justify-content-end">
@@ -59,7 +58,7 @@
         <i class="fa fa-bars"></i>
       </button>
       <a href="#" class="btn text-decoration-none fs-5">
-        <i class="fa fa-sign-out-alt"></i> sair
+        sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </a>  
     </div>
   </nav>
