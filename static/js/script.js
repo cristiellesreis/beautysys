@@ -1,26 +1,30 @@
 const darkModeToggle = document.getElementById('darkModeToggle');
 
-darkModeToggle.addEventListener('click', function() {
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleTheme);
+}
 
-    if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
-        document.documentElement.setAttribute("data-bs-theme", "light");
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute("data-bs-theme");
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+}
 
-    } else {
-        document.documentElement.setAttribute("data-bs-theme", "dark");
+function applyTheme(theme) {
+    document.documentElement.setAttribute("data-bs-theme", theme);
+    if (darkModeToggle) {
+        darkModeToggle.checked = (theme === 'dark');
     }
-});
+}
 
-/**
- * Exibe o modal de confirmação de remoção de um item (receita, despesa etc.).
- *
- * @param {string} nome - O nome do item que será exibido no texto do modal (ex: "Salário", "Aluguel").
- * @param {string} actionUrl - A URL para a qual o formulário de remoção será enviado (ex: "/financas/receitas/remover/3/").
- *
- * Funcionalidade:
- * - Atualiza o texto de confirmação no modal com o nome do item.
- * - Define a URL do formulário de remoção.
- * - Abre o modal utilizando a API do Bootstrap.
- */
+document.addEventListener('DOMContentLoaded', loadTheme);
+
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+}
+
 function abrirModalRemocao(nome, actionUrl) {
     document.getElementById('nome-item').textContent = nome;
     const queryString = window.location.search;

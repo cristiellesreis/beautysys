@@ -1,4 +1,63 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-app perfil
+{% load shared_tags %}
+
+<section class="p-4">
+
+    {% nav_menu "Perfil=perfil" %}
+    
+    <h1>Perfil</h1>
+    
+    {% show_messages %}
+
+    <div class="container d-flex flex-wrap align-items-center gap-5 justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="position-relative d-inline-block">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" 
+                     alt="Usuário" class="rounded-circle" width="150" height="150">
+                <input type="file" id="example-file-input-2" class="d-none">
+                <label for="example-file-input-2" class="position-absolute bottom-0 end-0 me-1 mb-1 text-dark">
+                    <i class="fa-solid fa-camera fa-lg"></i>
+                </label>
+            </div>
+        </div>
+    
+        <form class="row g-3 flex-grow-1">
+            <div class="col-sm-6">
+                <label for="first-name" class="form-label">Nome do Salão</label>
+                <input type="text" class="form-control" id="first-name" placeholder="Nome do salão" required>
+            </div>
+            <div class="col-sm-6">
+                <label for="last-name" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="last-name" placeholder="Telefone" required>
+            </div>
+            <div class="col-12">
+                <label for="address-1" class="form-label">Endereço</label>
+                <input type="text" class="form-control" id="address-1" placeholder="Rua, número, bairro..." required>
+            </div>
+            <div class="col-12">
+                <label for="address-2" class="form-label">CNPJ</label>
+                <input type="text" class="form-control" id="address-2" placeholder="CNPJ">
+            </div>
+            <div class="col-sm-6">
+                <label for="city" class="form-label">Email</label>
+                <input type="email" class="form-control" id="city" placeholder="Email">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </form>
+    </div>
+    
+    
+
+    
+
+
+</section>
+
+
+
+
+
 {% endblock %}
