@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'setup',
+    'app_core',
     'app_home',
     'app_cadastro_usuario',
     'app_agendamento',

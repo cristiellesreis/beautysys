@@ -1,22 +1,13 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 {% load static %}
+{% load shared_tags %}
+
 
 <section class="p-4">
 
-    <nav class="container-fluid w-100 mb-5 fs-6 fw-bold d-flex justify-content-start p-0">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'financas'%}">Resumo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active bg-gradient bg-secondary text-white" href="{% url 'listar_receitas' %}">Receitas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'listar_despesas' %}">Despesas</a>
-            </li>
-        </ul>
-    </nav>
+    {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
+
 
     <h1 class="mb-5 text-start">Receitas</h1>
 
@@ -69,7 +60,7 @@
                         <tr>
                             <td>{{ receita.descricao }}</td>
                             <td class="text-nowrap w-auto">{{ receita.data }}</td>
-                            <td class="text-nowrap w-auto">{{ receita.valor }}</td>
+                            <td class="text-nowrap w-auto">R$ {{ receita.valor }}</td>
                             <td class="text-center w-auto">
                                 <button class="btn btn-sm" onclick="carregarDadosReceita('{{ receita.id }}')" data-bs-toggle="modal" data-bs-target="#modal-nova-receita">
                                     <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>

@@ -78,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             yAxis: [{
                 title: { text: null },
-                labels: { enabled: false }
+                labels: { enabled: false },
+                tickAmount: 3,
             }],
             tooltip: {
                 shared: true,
@@ -97,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             series: [{
                 name: 'Despesas',
-                color: 'rgba(239, 68, 68, 0.6)',
-                borderColor: '#B91C1C',
+                color: '#FD7192',
+                borderColor: '#FD7192',
                 borderWidth: 1,
                 data: data.despesas
             }, {
                 name: 'Receitas',
-                color: 'rgba(59, 130, 246, 0.6)',
-                borderColor: '#1D4ED8',
+                color: '#20C8A7',
+                borderColor: '#20C8A7',
                 borderWidth: 1,
                 data: data.receitas
             }],

@@ -1,17 +1,140 @@
 {% extends 'base.html' %}
 {% block conteudo %}
+{% load static %}
+{% load shared_tags %}
 
-<section class="p-4">
-    <nav class="container-fluid w-100 mb-5 fs-6 fw-bold d-flex justify-content-start p-0">
-        <ul class="nav nav-pills nav-fill nav-justified">
-            <li class="nav-item">
-                <a class="nav-link active bg-gradient bg-secondary text-white" aria-current="true" href="#">Agendamentos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Clientes</a>
-            </li>
-        </ul>
-    </nav>
-</section>
+{% nav_menu "Agendamentos=agendamento,Clientes=lista_clientes" %}
+
+<h1 class="mb-1">Agendamentos</h1>
+
+{% show_messages %}
+
+<div id="agendamentos">
+    <div class="container w-100 col d-flex mt-4 mb-4 fs-5 fw-bold">
+        <button class="btn border border-light rounded-3 d-flex align-items-center btn-icon btn-dark btn-lg"
+                onclick="prepararNovoAgendamento()" type="button" data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+            <span class="btn-text pe-3">Novo</span>
+            <i class="fa-solid fa-circle-plus"></i>
+        </button>
+    </div>
+
+    <div class="container px-20 w-100 fs-6 text-center mt-5">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover border-light text-dark">
+                <thead>
+                    <tr>
+                        <th scope="col" class="w-20">Cliente</th>
+                        <th scope="col" class="text-nowrap w-auto">Data/Hora Inicio</th>
+                        <th scope="col" class="text-nowrap w-auto">Data/Hora Fim</th>
+                        <th scope="col" class="w-20">Serviço</th>
+                        <th scope="col" class="text-nowrap w-auto">Status</th>
+                        <th scope="col" class="text-center w-auto">Editar</th>
+                        <th scope="col" class="text-end w-auto">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                    <tr>
+                        <td data-label="Cliente">{{ agendamento.cliente.nome }}</td>
+                        <td data-label="Data/Hora Inicio" class="text-nowrap w-auto">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
+                        <td data-label="Data/Hora Fim" class="text-nowrap w-auto">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
+                        <td data-label="Serviço">{{ agendamento.servico }}</td>
+                        <td data-label="Status" class="text-nowrap w-auto">
+                            <span class="badge
+                                {% if agendamento.status == 'concluido' %}bg-success
+                                {% elif agendamento.status == 'cancelado' %}bg-danger
+                                {% else %}bg-primary{% endif %}">
+                                {{ agendamento.get_status_display }}
+                            </span>
+                        </td>
+                        <td data-label="Editar" class="text-center w-auto">
+                            <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
+                                data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+                                <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                            </button>
+                        </td>
+                        <td data-label="Excluir" class="text-end w-auto">
+                            <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
+                                data-toggle="modal" data-target="#modal-remocao">
+                                <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">Nenhum agendamento encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para cadastro/edição de agendamento -->
+<div class="modal fade" id="modal-novo-agendamento" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-title-7">
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" method="post" class="w-400 mw-full">
+                <input type="hidden" id="id_agendamento" name="id_agendamento">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="id_cliente">Cliente</label>
+                        <select class="form-control" id="id_cliente" name="cliente" required>
+                            {% for cliente in todos_clientes %}
+                            <option value="{{ cliente.id }}" {% if form.cliente.value == cliente.id %}selected{% endif %}>
+                                {{ cliente.nome }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_data_hora_inicio">Data e Hora Inicio</label>
+                        <input type="datetime-local" class="form-control" id="id_data_hora_inicio" name="data_hora_inicio"
+                               value="{{ form.data_hora_inicio.value|default:'' }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_data_hora_fim">Data e Hora Fim</label>
+                        <input type="datetime-local" class="form-control" id="id_data_hora_fim" name="data_hora_fim"
+                               value="{{ form.data_hora_fim.value|default:'' }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_servico">Serviço</label>
+                        <input type="text" class="form-control" id="id_servico" name="servico"
+                               value="{{ form.servico.value|default:'' }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_status">Status</label>
+                        <select class="form-control" id="id_status" name="status">
+                            <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Agendado</option>
+                            <option value="concluido" {% if form.status.value == 'concluido' %}selected{% endif %}>Concluído</option>
+                            <option value="cancelado" {% if form.status.value == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_observacoes">Observações</label>
+                        <textarea class="form-control" id="id_observacoes" name="observacoes">{{ form.observacoes.value|default:'' }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/agenda/agenda.js' %}"></script>
 
 {% endblock %}
