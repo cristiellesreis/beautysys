@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeautySys</title>
+  <link rel="icon" href="/static/img/icone-logo.svg" type="image/x-icon">
   <script src="https://kit.fontawesome.com/b144170c7e.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/halfmoon.min.css" rel="stylesheet" integrity="sha256-RjeFzczeuZHCyS+Gvz+kleETzBF/o84ZRHukze/yv6o=" crossorigin="anonymous">
@@ -13,13 +14,13 @@
 </head>
 
 <body class="ps-md-sbwidth">
-  <!-- Sidebar -->
+
   <nav class="sidebar offcanvas-start offcanvas-md bg-light-subtle border border-0" tabindex="-1" id="sidebar-example">
     <div class="offcanvas-header d-flex justify-content-end">
       <button type="button" class="btn-close d-lg-none ms-1" data-bs-dismiss="offcanvas" data-bs-target="#sidebar-example" aria-label="Close"></button>
     </div>
     <div class="d-flex justify-content-center">
-      <a class="sidebar-brand" href="#">BeautySys</a>
+      <img src="/static/img/logo.svg" alt="logotipo" class="dark-invert" style="filter: invert(1); height: 40px; width: auto;">
     </div>
 
     <div class="offcanvas-body">
@@ -33,25 +34,24 @@
       </div>
       <ul class="nav nav-pills flex-column w-75 mx-auto">
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
+            <a class="sidebar-link bg-gradient bg-white bg-opacity-75 text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page">Dashboard</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page">Perfil</a>
+            <a class="sidebar-link bg-gradient bg-white bg-opacity-75 text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page">Perfil</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
+            <a class="sidebar-link bg-gradient bg-white bg-opacity-75 text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page">Agenda</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page">Finanças</a>
+            <a class="sidebar-link bg-gradient bg-white bg-opacity-75 text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page">Finanças</a>
         </li>
         <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page">Estoque</a>
+            <a class="sidebar-link bg-gradient bg-white bg-opacity-75 text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page">Estoque</a>
         </li>
       </ul>
     </div>
   </nav>
 
-  <!-- Navebar -->
   <nav class="navbar navbar-expand-lg border-bottom border-primary border-opacity-10">
     <div class="container-fluid d-flex justify-content-end">
       <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-example" class="btn btn-secondary d-md-none me-2">
@@ -62,7 +62,9 @@
       </a>  
     </div>
   </nav>
+
   <main>
+
     <div class="content-wrapper">
 
       {% block conteudo %}
@@ -71,7 +73,6 @@
 
     </div>
 
-    <!-- Modal de confirmação de remoção -->
     <div class="modal fade" id="modal-remocao" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <form method="POST" id="form-remocao" class="modal-content">
@@ -87,13 +88,12 @@
                     <p>Tem certeza que deseja remover <strong id="nome-item"></strong>?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Sim</button>
+                    <button type="submit" class="btn w-100 btn-lg bg-gradient fw-bold text-white btn-danger">Sim</button>
                 </div>
             </div>
           </form>
         </div>
     </div>
-
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
