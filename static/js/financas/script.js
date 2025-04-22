@@ -60,56 +60,103 @@ function carregarDadosDespesa(id) {
 
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/financas/grafico-dados-mensal/')
-    .then(response => response.json())
-    .then(data => {
-        Highcharts.chart('graficoFinanceiro', {
-            chart: {
-                type: 'column',
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutBounce'
-                }
-            },
-            title: { text: null },
-            subtitle: { text: null },
-            legend: { enabled: true },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: [{
-                title: { text: null },
-                labels: { enabled: false },
-                tickAmount: 3,
-            }],
-            tooltip: {
-                shared: true,
-                headerFormat: '<span style="font-size: 15px">{point.key}</span><br/>',
-                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>R$ {point.y:,.2f}</b><br/>'
-            },
-            plotOptions: {
-                column: {
-                    borderRadius: 3,
-                    grouping: true,
+        .then(response => response.json())
+        .then(data => {
+            Highcharts.chart('graficoFinanceiro', {
+                chart: {
+                    type: 'column',
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    },
+                    backgroundColor: null
                 },
-                series: {
-                    grouping: false,
-                    borderWidth: 0
+                title: { 
+                    text: 'Resumo Financeiro Mensal',
+                    style: {
+                        color: '#5c6e8a',
+                        fontSize: '20px',
+                        fontWeight: 'bold'
+                    }
+                },
+                subtitle: { 
+                    text: 'Receitas e Despesas',
+                    style: {
+                        color: '#5c6e8a',
+                        fontSize: '14px',
+                        fontStyle: 'italic'
+                    }
+                },
+                legend: {
+                    enabled: true,
+                    itemStyle: {
+                        color: '#5c6e8a',
+                        fontSize: '14px',
+                        fontWeight: 'bold'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        style: {
+                            color: '#5c6e8a', 
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                yAxis: [{
+                    title: { text: null },
+                    labels: { enabled: false },
+                    tickAmount: 3,
+                    gridLineColor:'#8a98b1',
+                }],
+                tooltip: {
+                    shared: true,
+                    headerFormat: '<span style="font-size: 15px">{point.key}</span><br/>',
+                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>R$ {point.y:,.2f}</b><br/>'
+                },
+                plotOptions: {
+                    column: {
+                        borderRadius: 3,
+                        grouping: true,
+                    },
+                    series: {
+                        grouping: false,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Despesas',
+                    color: '#FD7192',
+                    borderColor: '#FD7192',
+                    borderWidth: 1,
+                    data: data.despesas
+                }, {
+                    name: 'Receitas',
+                    color: '#20C8A7',
+                    borderColor: '#20C8A7',
+                    borderWidth: 1,
+                    data: data.receitas
+                }],
+                exporting: { enabled: true 
+                },
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
                 }
-            },
-            series: [{
-                name: 'Despesas',
-                color: '#FD7192',
-                borderColor: '#FD7192',
-                borderWidth: 1,
-                data: data.despesas
-            }, {
-                name: 'Receitas',
-                color: '#20C8A7',
-                borderColor: '#20C8A7',
-                borderWidth: 1,
-                data: data.receitas
-            }],
-            exporting: { enabled: false }
+            });
         });
+            
     });
-});
+

@@ -3,57 +3,66 @@
 {% load static %}
 {% load shared_tags %}
 
-<section class="p-4">
+<section class="p-5">
 
   {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
 
-  <h1 class="mb-5">Resumo</h1>
-
-  <div class="container">
-    <div class="d-flex flex-row justify-content-center flex-wrap gap-4 mb-5">
-      <div class="card shadow-sm" style="width: 100%; max-width: 250px;">
-        <div class="card-body d-flex align-items-center gap-4">
-          <i class="fa-solid fa-hand-holding-dollar fa-2x"></i>
-          <div>
-            <h5 class="card-title mb-1">R$ 150,00</h5>
-            <p class="card-text mb-1">Total da Receita</p>
-            <p class="card-text mb-0">
-              <small class="text-body-secondary">Fevereiro 2025</small>
-            </p>
-          </div>
-        </div>
-      </div>
-    
-      <div class="card shadow-sm" style="width: 100%; max-width: 250px;">
-        <div class="card-body d-flex align-items-center gap-4">
-          <i class="fa-solid fa-money-bill-wave fa-2x"></i>
-          <div>
-            <h5 class="card-title mb-1">R$ 90,00</h5>
-            <p class="card-text mb-1">Total de Despesas</p>
-            <p class="card-text mb-0">
-              <small class="text-body-secondary">Fevereiro 2025</small>
-            </p>
-          </div>
-        </div>
-      </div>
-    
-      <div class="card shadow-sm" style="width: 100%; max-width: 250px;">
-        <div class="card-body d-flex align-items-center gap-4">
-          <i class="fa-solid fa-chart-line fa-2x"></i>
-          <div>
-            <h5 class="card-title mb-1">Lucro: R$ 60,00</h5>
-            <p class="card-text mb-1">Situação Financeira</p>
-            <p class="card-text mb-0">
-              <small class="text-body-secondary">Fevereiro 2025</small>
-            </p>
-          </div>
-        </div>
-      </div>
+  <div class="content mb-5">
+    <div class="container p-0 m-0">
+      <h1 class="fw-normal text-body-emphasis">Resumo Financeiro</h1>
+      <p class="text-muted">
+        Confira os principais dados financeiros do seu salão, incluindo receitas, despesas e margem de lucro do mês.
+      </p>
     </div>
-    
+  </div>
 
-    <div id="graficoFinanceiro" style="width: 100%; height: 500px;"></div>
-  
+  <div class="form-group mb-5" style="max-width: 220px;">
+    <label for="periodo" class="form-label">Selecione o Período:</label>
+    <select id="periodo" class="form-select">
+        <option value="mensal">Mensal</option>
+        <option value="anual">Anual</option>
+    </select>
+  </div>
+
+  <div class="container m-0 p-0" style="max-width: 900px;">
+    <div class="d-flex flex-row justify-content-center flex-wrap gap-4 mb-5">
+      <div class="card shadow-sm w-auto" style="width: 100%; background: linear-gradient(135deg, #20C8A7, #A0E7D1);">
+        <div class="card-body d-flex align-items-center gap-4">
+            <i class="fa-solid fa-hand-holding-dollar fa-2x text-white"></i>
+            <div>
+                <p class="card-text mb-1 text-white">Total da Receita</p>
+                <h5 class="card-title mb-1 fs-4 text-white">R$ 150,00</h5>
+                <small class="text-white-50">+10% em relação ao mês passado</small>
+            </div>
+        </div>
+      </div>
+    
+      <div class="card shadow-sm w-auto" style="width: 100%; background: linear-gradient(135deg, #fc5c5c, #f89696);">
+        <div class="card-body d-flex align-items-center gap-4">
+          <i class="fa-solid fa-money-bill-wave fa-2x text-white"></i>
+            <div>
+                <p class="card-text mb-1 text-white">Total da Despesas</p>
+                <h5 class="card-title mb-1 fs-4 text-white">R$ 90,00</h5>
+                <small class="text-white-50">+10% em relação ao mês passado</small>
+            </div>
+        </div>
+      </div>
+      <div class="card shadow-sm w-auto" style="width: 100%; background: linear-gradient(135deg, #208ac8, #76c0eb);">
+        <div class="card-body d-flex align-items-center gap-4">
+          <i class="fa-solid fa-chart-line fa-2x text-white"></i>
+            <div>
+                <p class="card-text mb-1 text-white">Margem de Lucro</p>
+                <h5 class="card-title mb-1 fs-4 text-white">R$ 100,00</h5>
+                <small class="text-white-50">+10% em relação ao mês passado</small>
+            </div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="d-flex justify-content-start">
+      <div id="graficoFinanceiro" style="width: 100%; max-width: 900px; height: 400px;"></div>
+    </div>
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
