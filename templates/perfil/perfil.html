@@ -1,3 +1,94 @@
 {% extends 'base.html' %}
 {% block conteudo %}
+{% load shared_tags %}
+
+<section class="p-5">
+
+  {% nav_menu "Perfil=perfil" %}
+
+  <div class="container m-0 p-0">
+
+    <div class="content mb-5">
+      <div class="container p-0 m-0">
+        <h1 class="fw-normal text-body-emphasis">Alterar Dados Cadastrais</h1>
+        <p class="text-muted">Atualize as informações do seu perfil abaixo.</p>
+      </div>
+    </div>
+
+    {% show_messages %}
+
+    <div class="row align-items-start g-3" style="max-width: 1000px;">
+
+      <div class="col-12 col-lg-3 d-flex justify-content-center">
+        <div class="position-relative">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" 
+               alt="Usuário" class="rounded-circle shadow-sm border border-2" width="180" height="180">
+          <input type="file" id="upload-foto" class="d-none">
+          <label for="upload-foto" class="position-absolute bottom-0 end-0 me-1 mb-1 text-white bg-dark rounded-circle p-2 shadow-sm" title="Alterar foto">
+            <i class="fa-solid fa-camera fa-lg"></i>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-8">
+        <form class="row g-4 needs-validation" method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="col-12 col-md-6">
+            <label for="nomeSalao" class="form-label">Nome do Salão</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="nomeSalao" name="nomeSalao" placeholder="Nome do salão" required>
+            <div class="invalid-feedback">Por favor, informe o nome do salão.</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="tel" class="form-control form-control-lg shadow-sm" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+            <div class="invalid-feedback">Informe um telefone.</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control form-control-lg shadow-sm" id="email" name="email" placeholder="exemplo@email.com" required>
+            <div class="invalid-feedback">Informe um email válido.</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="cnpj" class="form-label">CNPJ</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required>
+            <div class="invalid-feedback">Informe o CNPJ.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="endereco" name="endereco" placeholder="Rua, número e complemento" required>
+            <div class="invalid-feedback">Informe o endereço completo.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="cidade" name="cidade" placeholder="Cidade" required>
+            <div class="invalid-feedback">Informe a cidade.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="estado" class="form-label">Estado (UF)</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="estado" name="estado" placeholder="SP" maxlength="2" required>
+            <div class="invalid-feedback">Informe o estado.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control form-control-lg shadow-sm" id="cep" name="cep" placeholder="00000-000" required>
+            <div class="invalid-feedback">Informe o CEP.</div>
+          </div>
+
+          <div class="col-12 mt-3 mt-5">
+            <button type="submit" class="btn bg-gradient bg-dark btn-lg w-100 shadow-sm fw-bold text-white">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
