@@ -53,6 +53,7 @@
                                     <th scope="col" class="w-50">Item</th>
                                     <th scope="col" class="text-nowrap w-auto">Entrada</th>
                                     <th scope="col" class="text-nowrap w-auto">Quantidade</th>
+                                    <th scope="col" class="text-nowrap w-auto">Preço Un.</th>
                                     <th scope="col" class="text-center w-auto">Editar</th>
                                     <th scope="col" class="text-end w-auto">Excluir</th>
                                 </tr>
@@ -64,9 +65,21 @@
                                         <td data-label="Item">{{item.item}}</td>
                                         <td data-label="Entrada" class="text-nowrap w-auto">{{item.entrada_no_estoque|date:"d/m/Y"}}</td>
                                         <td data-label="Quantidade" class="text-nowrap w-auto">{{item.quantidade}}</td>
+                                        <td data-label="Quantidade" class="text-nowrap w-auto">{{item.preco}}</td>
+
+
                                         <td data-label="Editar" class="text-center w-auto">
-                                            <button class="btn btn-sm"><i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i></button>
+                                          <button
+                                            class="btn btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#modalEditar{{ item.pk }}"
+                                            data-id="{{ item.pk }}"
+                                            data-nome="{{ item.item }}"
+                                          >
+                                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                          </button>
                                         </td>
+                                        
                                         <td data-label="Excluir" class="text-end w-auto">
                                             <button 
                                             class="btn btn-sm btn-excluir" 
@@ -77,6 +90,8 @@
                                             <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
                                           </button>
                                         </td>
+
+
                                     </tr>
                                     <div class="modal fade" id="modalExcluir{{ item.pk }}" tabindex="-1" aria-labelledby="modalExcluirLabel{{ item.pk }}" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -104,6 +119,62 @@
                                                 <button type="submit" class="btn btn-danger">Excluir</button>
                                               </div>
                                             </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="modal fade" id="modalEditar{{ item.pk }}" tabindex="-1" aria-labelledby="modalEditarLabel{{ item.pk }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <form method="POST" action="{% url 'altera_item_estoque' item.pk %}">
+                                              {% csrf_token %}
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="modalEditarLabel{{ item.pk }}">Editar {{ item.item }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="mb-3">
+                                                  <label for="itemNome{{ item.pk }}" class="form-label">Nome do item</label>
+                                                  <input 
+                                                    type="text" 
+                                                    name="item" 
+                                                    id="itemNome{{ item.pk }}" 
+                                                    class="form-control" 
+                                                    value="{{ item.item }}" 
+                                                    required
+                                                  >
+                                                </div>
+                                                <div class="mb-3">
+                                                  <label for="itemQuantidade{{ item.pk }}" class="form-label">Quantidade</label>
+                                                  <input 
+                                                    type="number" 
+                                                    name="quantidade" 
+                                                    id="itemQuantidade{{ item.pk }}" 
+                                                    class="form-control" 
+                                                    value="{{ item.quantidade }}" 
+                                                    min="0" 
+                                                    required
+                                                  >
+                                                </div>
+                                                <div class="mb-3">
+                                                  <label for="itemPreco{{ item.pk }}" class="form-label">Preço</label>
+                                                  <input 
+                                                    type="number" 
+                                                    step="0.01" 
+                                                    name="preco" 
+                                                    id="itemPreco{{ item.pk }}" 
+                                                    class="form-control" 
+                                                    value="{{ item.preco }}" 
+                                                    required
+                                                  >
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                              </div>
+                                            </form>
+                                            
                                           </div>
                                         </div>
                                       </div>

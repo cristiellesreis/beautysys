@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item_Estoque
 from .services import EstoqueService
 from .forms import ItemEstoqueForm
@@ -38,3 +38,13 @@ def remove_item_estoque(request,pk):
         return redirect('estoque')
     
     return redirect('estoque')
+
+def altera_item_estoque(request, pk):
+    item = get_object_or_404(Item_Estoque, pk=pk)
+
+    if request.method == 'POST':
+        sucesso, resultado = EstoqueService.editar_item(pk, request.POST)
+        if sucesso:
+            return redirect('estoque')
+        else:
+            return render(request, 'estoque/editar_item.html', {'form': resultado, 'item': item})

@@ -1,4 +1,5 @@
 from .models import Item_Estoque
+from .forms import ItemEstoqueForm
 from .exceptions import QuantidadeInsuficiente
 from django.shortcuts import get_object_or_404
 
@@ -31,6 +32,13 @@ class EstoqueService:
 
 
     @staticmethod
-    def editar_item(request,pk):
+    def editar_item(pk, dados):
         item = get_object_or_404(Item_Estoque, pk=pk)
+        form = ItemEstoqueForm(dados, instance=item)
+
+        if form.is_valid():
+            form.save()
+            return True, None
+        else:
+            return False, form
 
