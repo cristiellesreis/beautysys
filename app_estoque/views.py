@@ -21,7 +21,8 @@ def adicionar_item_estoque(request):
         if form.is_valid():
             EstoqueService.adicionar_item(
                 nome=form.cleaned_data['item'],
-                quantidade=form.cleaned_data['quantidade']
+                quantidade=form.cleaned_data['quantidade'],
+                preco=form.cleaned_data['preco']
             )
             return redirect('estoque')
     

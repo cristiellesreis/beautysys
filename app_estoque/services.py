@@ -8,10 +8,11 @@ class EstoqueService:
         return Item_Estoque.objects.all()
 
     @staticmethod
-    def adicionar_item(nome, quantidade):
+    def adicionar_item(nome, quantidade, preco):
         Item_Estoque.objects.create(
             item=nome,
             quantidade=quantidade,
+            preco = preco
             )
         
     @staticmethod
@@ -27,3 +28,9 @@ class EstoqueService:
                 item.delete()
             else:
                 item.save()
+
+
+    @staticmethod
+    def editar_item(request,pk):
+        item = get_object_or_404(Item_Estoque, pk=pk)
+

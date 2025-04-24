@@ -32,6 +32,7 @@
                             <th scope="col" class="text-nowrap w-auto">#</th>
                             <th scope="col" class="w-50">Item</th>
                             <th scope="col" class="text-nowrap w-auto">Entrada</th>
+                            <th scope="col" class="text-nowrap w-auto">Preço Unitário</th>
                             <th scope="col" class="text-nowrap w-auto">Quantidade</th>
                             <th scope="col" class="text-center w-auto">Editar</th>
                             <th scope="col" class="text-end w-auto">Excluir</th>
@@ -43,6 +44,7 @@
                                 <td data-label="#" class="text-nowrap w-auto">1</td>
                                 <td data-label="Item">{{item.item}}</td>
                                 <td data-label="Entrada" class="text-nowrap w-auto">{{item.entrada_no_estoque|date:"d/m/Y"}}</td>
+                                <td data-label="Quantidade" class="text-nowrap w-auto">{{item.preco}}</td>
                                 <td data-label="Quantidade" class="text-nowrap w-auto">{{item.quantidade}}</td>
                                 <td data-label="Editar" class="text-center w-auto">
                                     <button class="btn btn-sm"><i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i></button>
