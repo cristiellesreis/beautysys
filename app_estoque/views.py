@@ -22,9 +22,12 @@ def adicionar_item_estoque(request):
             EstoqueService.adicionar_item(
                 nome=form.cleaned_data['item'],
                 quantidade=form.cleaned_data['quantidade'],
+                custo_aquisicao=form.cleaned_data['custo_aquisicao'],
                 preco=form.cleaned_data['preco']
             )
             return redirect('estoque')
+        
+
     
 def remove_item_estoque(request,pk):
     exception = {}
@@ -38,6 +41,9 @@ def remove_item_estoque(request,pk):
         return redirect('estoque')
     
     return redirect('estoque')
+
+
+
 
 def altera_item_estoque(request, pk):
     item = get_object_or_404(Item_Estoque, pk=pk)

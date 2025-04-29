@@ -9,10 +9,11 @@ class EstoqueService:
         return Item_Estoque.objects.all()
 
     @staticmethod
-    def adicionar_item(nome, quantidade, preco):
+    def adicionar_item(nome, quantidade,custo_aquisicao, preco):
         Item_Estoque.objects.create(
             item=nome,
             quantidade=quantidade,
+            custo_aquisicao=custo_aquisicao,
             preco = preco
             )
         
