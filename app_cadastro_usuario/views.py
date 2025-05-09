@@ -16,7 +16,6 @@ class CadastroView(View):
         email_confirm = request.POST.get("emailconfirm")
         senha = request.POST.get("senha")
         senha_confirm = request.POST.get("senhaconfirm")
-        tipo_usuario = request.POST.get("tipo")  # cliente, funcionario, administrador
 
         if email != email_confirm or senha != senha_confirm:
             return render(request, "cadastro_usuario/cadastro.html", {
@@ -34,10 +33,6 @@ class CadastroView(View):
             })
 
         user = User.objects.create_user(username=usuario, email=email, password=senha)
-        grupo = Group.objects.filter(name=tipo_usuario.capitalize()).first()
-
-        if grupo:
-            user.groups.add(grupo)
 
         return redirect("login")
 
