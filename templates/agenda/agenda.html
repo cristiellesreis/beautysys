@@ -1,74 +1,153 @@
 {% extends 'base.html' %}
 {% block conteudo %}
+{% load static %}
+{% load shared_tags %}
 
-<nav class="container w-100 col d-flex mt-4 mb-4 fs-6 fw-bold">
-    <a href="#agendamentos" class="me-4 link-offset-2 link-offset-2-hover link-underline link-underline-opacity-25 link-underline-opacity-75-hover mb-5">Agendamentos</a>
-    <a href="#clientes" class="me-4 link-offset-2 link-offset-2-hover link-underline link-underline-opacity-25 link-underline-opacity-75-hover mb-5">Clientes</a>
-</nav>
+<section class="p-5">
+    
+    {% nav_menu "Agendamentos=agendamento,Clientes=lista_clientes" %}
 
-<!-- <div id="agendamentos">
-
-</div> -->
-
-<div id="clientes">
-    <div class="container w-100 d-flex mt-5 mb-4">
-
-        <div class="input-group search-wrapper d-flex flex-nowrap rounded-4 me-3 flex-grow-1">
-            <input type="search" class="form-control-lg search-input border border-light w-100" id="first-name" placeholder="Pesquisar" required>
-        </div>
-        <div class="d-flex align-items-center">
-            <i class="fa-solid fa-filter fa-lg"></i>
+    <div class="content mb-5">
+        <div class="container p-0 m-0">
+            <h1 class="fw-normal text-body-emphasis">Agendamentos</h1>
+            <p class="text-muted">
+                Visualize e gerencie os agendamentos dos clientes. Acompanhe status, horários e mantenha tudo organizado.
+            </p>
         </div>
     </div>
-    <div class="container w-100 col d-flex mt-4 mb-4 fs-5 fw-bold">
-        <button class="btn border border-light rounded-3 d-flex align-items-center btn-icon btn-dark btn-lg" type="button">
-            <span class="btn-text pe-3">Novo</span>
-            <i class="fa-solid fa-circle-plus"></i>    
-        </button>
+
+    {% show_messages %}
+
+    <div class="container m-0 p-0">
+        <div id="agendamentos">
+            <div class="container-fluid w-100 d-flex justify-content-start mb-5 px-0">
+                <button class="btn btn-lg bg-gradient bg-dark fw-bold text-white d-flex align-items-center gap-2"
+                        onclick="prepararNovoAgendamento()" type="button" data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Novo Agendamento</span>
+                </button>
+            </div>
+        
+            <div class="container-fluid w-auto fs-6 text-start px-0">
+                <div class="table-responsive" style="max-width: 900px;">
+                    <table class="table table-striped table-hover border-light text-dark">
+                        <thead  class="table-dark">
+                            <tr>
+                                <th scope="col" class="w-20">Cliente</th>
+                                <th scope="col" class="text-nowrap w-auto">Data/Hora Início</th>
+                                <th scope="col" class="text-nowrap w-auto">Data/Hora Fim</th>
+                                <th scope="col" class="w-20">Serviço</th>
+                                <th scope="col" class="text-nowrap w-auto">Status</th>
+                                <th scope="col" class="text-center w-auto">Editar</th>
+                                <th scope="col" class="text-end w-auto">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for agendamento in agendamentos %}
+                            <tr>
+                                <td data-label="Cliente">{{ agendamento.cliente.nome }}</td>
+                                <td data-label="Data/Hora Inicio" class="text-nowrap w-auto">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
+                                <td data-label="Data/Hora Fim" class="text-nowrap w-auto">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
+                                <td data-label="Serviço">{{ agendamento.servico }}</td>
+                                <td data-label="Status" class="text-nowrap w-auto">
+                                    <span class="badge
+                                        {% if agendamento.status == 'concluido' %}bg-success
+                                        {% elif agendamento.status == 'cancelado' %}bg-danger
+                                        {% else %}bg-info{% endif %}">
+                                        {{ agendamento.get_status_display }}
+                                    </span>
+                                </td>
+                                <td data-label="Editar" class="text-center w-auto">
+                                    <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
+                                        data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+                                        <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                    </button>
+                                </td>
+                                <td data-label="Excluir" class="text-end w-auto">
+                                    <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
+                                        data-toggle="modal" data-target="#modal-remocao">
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7">Nenhum agendamento encontrado.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modal-novo-agendamento" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-title-7">
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="#" method="post" class="w-400 mw-full">
+                        <input type="hidden" id="id_agendamento" name="id_agendamento">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id_cliente" class="pb-2">Cliente</label>
+                                <select class="form-control mb-2 form-control-lg" id="id_cliente" name="cliente" required>
+                                    {% for cliente in todos_clientes %}
+                                    <option value="{{ cliente.id }}" {% if form.cliente.value == cliente.id %}selected{% endif %}>
+                                        {{ cliente.nome }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_data_hora_inicio" class="pb-2">Data e Hora Inicio</label>
+                                <input type="datetime-local" class="form-control mb-2 form-control-lg" id="id_data_hora_inicio" name="data_hora_inicio"
+                                    value="{{ form.data_hora_inicio.value|default:'' }}" required>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_data_hora_fim" class="pb-2">Data e Hora Fim</label>
+                                <input type="datetime-local" class="form-control mb-2 form-control-lg" id="id_data_hora_fim" name="data_hora_fim"
+                                    value="{{ form.data_hora_fim.value|default:'' }}" required>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_servico" class="pb-2">Serviço</label>
+                                <input type="text" class="form-control mb-2 form-control-lg" id="id_servico" name="servico"
+                                    value="{{ form.servico.value|default:'' }}" required>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_status" class="pb-2">Status</label>
+                                <select class="form-control mb-2 form-control-lg" id="id_status" name="status">
+                                    <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Agendado</option>
+                                    <option value="concluido" {% if form.status.value == 'concluido' %}selected{% endif %}>Concluído</option>
+                                    <option value="cancelado" {% if form.status.value == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                                </select>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_observacoes" class="pb-2">Observações</label>
+                                <textarea class="form-control mb-2 form-control-lg" id="id_observacoes" name="observacoes">{{ form.observacoes.value|default:'' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-lg bg-gradient bg-dark fw-bold text-white btn-block w-100">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <script src="{% static 'js/agenda/agenda.js' %}"></script>
     </div>
 
-    <div class="container px-20 w-100 fs-6 text-center mt-5"> 
-        <div class="table-responsive">
-            <table class="table table-striped table-hover border-light text-dark">
-                <thead>
-                    <tr>
-                        <th scope="col" class="text-nowrap w-auto">#</th>
-                        <th scope="col" class="w-50">Nome</th>
-                        <th scope="col" class="text-nowrap w-auto">Contato</th>
-                        <th scope="col" class="text-nowrap w-auto">Email</th>
-                        <th scope="col" class="text-center w-auto">Editar</th>
-                        <th scope="col" class="text-end w-auto">Excluir</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="#" class="text-nowrap w-auto">1</td>
-                        <td data-label="Nome">Cliente 1</td>
-                        <td data-label="Contato" class="text-nowrap w-auto">(xx)xxxxx-xxxx</td>
-                        <td data-label="Email" class="text-nowrap w-auto">cliente@cliente.com</td>
-                        <td data-label="Editar" class="text-center w-auto">
-                            <button class="btn btn-sm"><i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i></button>
-                        </td>
-                        <td data-label="Excluir" class="text-end w-auto">
-                            <button class="btn btn-sm"><i class="fa-solid fa-trash fa-lg" style="color: #f95b56;"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td data-label="#" class="text-nowrap w-auto">2</td>
-                        <td data-label="Nome">Cliente 2</td>
-                        <td data-label="Contato" class="text-nowrap w-auto">(xx)xxxxx-xxxx</td>
-                        <td data-label="Email" class="text-nowrap w-auto">cliente@cliente.com</td>
-                        <td data-label="Editar" class="text-center w-auto">
-                            <button class="btn btn-sm"><i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i></button>
-                        </td>
-                        <td data-label="Excluir" class="text-end w-auto">
-                            <button class="btn btn-sm"><i class="fa-solid fa-trash fa-lg" style="color: #f95b56;"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+</section>
+
 
 {% endblock %}

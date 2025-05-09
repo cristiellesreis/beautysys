@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+{% load static %}
+{% load shared_tags %}
+
+<section class="p-5">
+    
+    {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
+
+    <div class="content mb-5">
+        <div class="container p-0 m-0">
+            <h1 class="fw-normal text-body-emphasis">Cadastrar Despesa</h1>
+            <p class="text-muted">
+                Registre suas despesas para manter o controle financeiro em dia. Insira as informações abaixo.
+            </p>
+        </div>
+    </div>
+
+    {% show_messages %}
+
+    <div class="container m-0 p-0">
+        <div class="container-fluid w-100 d-flex justify-content-start mb-4 px-0">
+            <button class="btn bg-gradient bg-dark fw-bold text-white btn-lg d-flex align-items-center gap-2"
+                    onclick="prepararNovoCadastroDespesa()" type="button" data-bs-toggle="modal" data-bs-target="#modal-nova-despesa">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Nova Despesa</span>
+            </button>
+        </div>
+        
+        <div id="receitas">
+
+            <div class="row mb-5 px-0">
+                <div class="col-sm-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
+                    <form method="get" action="{% url 'listar_despesas' %}" class="d-flex flex-grow-1 gap-2">
+                        <input type="search"
+                               class="form-control form-control-lg border border-light flex-grow-1"
+                               name="criterio"
+                               value="{{ termo|default:'' }}"
+                               placeholder="Pesquisar despesas...">
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa-solid fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="container-fluid w-auto fs-6 text-start px-0">
+                <div class="table-responsive" style="max-width: 900px;">
+                    <table class="table table-striped table-hover border-light text-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="w-50">Descrição</th>
+                                <th scope="col" class="text-nowrap w-auto">Data</th>
+                                <th scope="col" class="text-nowrap w-auto">Valor</th>
+                                <th scope="col" class="text-center w-auto">Editar</th>
+                                <th scope="col" class="text-end w-auto">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for despesa in despesas %}
+                            <tr>
+                                <td data-label="Descrição">{{ despesa.descricao }}</td>
+                                <td data-label="Data" class="text-nowrap w-auto">{{ despesa.data }} </td>
+                                <td data-label="Valor" class="text-nowrap w-auto">R$ {{ despesa.valor }}</td>
+                                <td data-label="Editar" class="text-center w-auto">
+                                    <button class="btn btn-sm" onclick="carregarDadosDespesa('{{ despesa.id }}')"
+                                        data-bs-toggle="modal" data-bs-target="#modal-nova-despesa">
+                                        <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                    </button>
+                                </td>
+                                <td data-label="Excluir" class="text-end w-auto">
+                                    <button class="btn btn-sm" onclick="abrirModalRemocao('{{ despesa.descricao }}', '{% url 'remover_despesa' despesa.id %}')"
+                                        data-toggle="modal" data-target="#modal-remocao">
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5">Nenhuma despesa encontrada.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modal-nova-despesa" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-title-7">
+                            Cadastro de Despesa
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'cadastrar_despesa' %}" method="post" class="w-400 mw-full">
+                        <input type="hidden" name="id_despesa" id="id_despesa">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-group">
+                              <label for="id_descricao" class="pb-2">Descrição</label>
+                              <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao"
+                                     value="{{ form.descricao.value }}" required>
+                            </div>
+        
+                            <div class="form-group">
+                              <label for="id_valor" class="pb-2">Valor</label>
+                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor"
+                                       value="{{ form.valor.value }}" required>
+                            </div>
+        
+                            <div class="form-group">
+                              <label for="id_data" class="pb-2">Data</label>
+                              <input type="date" class="form-control mb-2 form-control-lg" id="id_data" name="data"
+                                     value="{{ form.data.value }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-lg bg-gradient bg-dark fw-bold text-white btn-block w-100">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <script src="{% static 'js/financas/script.js' %}"></script>
+    </div>
+
+
+</section>
+
+
+
+{% endblock %}

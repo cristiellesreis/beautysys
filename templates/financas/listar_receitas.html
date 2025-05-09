@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+{% load static %}
+{% load shared_tags %}
+
+
+<section class="p-5">
+
+    {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
+
+    <div class="content mb-5">
+        <div class="container p-0 m-0">
+            <h1 class="fw-normal text-body-emphasis">Cadastrar Receita</h1>
+            <p class="text-muted">
+                Insira os detalhes da receita para registrar no sistema e manter o controle financeiro atualizado.
+            </p>
+        </div>
+    </div>
+
+    {% show_messages %}
+
+    <div class="container m-0 p-0">
+        <div class="container-fluid w-100 d-flex justify-content-start mb-4 px-0">
+            <button class="btn bg-gradient bg-dark fw-bold text-white btn-lg d-flex align-items-center gap-2"
+                    onclick="prepararNovoCadastroReceita()" type="button" data-bs-toggle="modal" data-bs-target="#modal-nova-receita">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Nova Receita</span>
+            </button>
+        </div>
+    
+        <div id="receitas">
+            <div class="row mb-5 px-0">
+                <div class="col-sm-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
+                    <form method="get" action="{% url 'listar_receitas' %}" class="d-flex flex-grow-1 gap-2">
+                        <input type="search"
+                               class="form-control form-control-lg border border-light flex-grow-1"
+                               name="criterio"
+                               value="{{ termo|default:'' }}"
+                               placeholder="Pesquisar receitas...">
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa-solid fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+    
+            <div class="container-fluid w-auto fs-6 text-start px-0">
+                <div class="table-responsive" style="max-width: 900px;">
+                    <table class="table table-striped table-hover border-light text-dark">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="w-50">Descrição</th>
+                                <th scope="col" class="text-nowrap w-auto">Data</th>
+                                <th scope="col" class="text-nowrap w-auto">Valor</th>
+                                <th scope="col" class="text-center w-auto">Editar</th>
+                                <th scope="col" class="text-end w-auto">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for receita in receitas %}
+                            <tr>
+                                <td>{{ receita.descricao }}</td>
+                                <td class="text-nowrap w-auto">{{ receita.data }}</td>
+                                <td class="text-nowrap w-auto">R$ {{ receita.valor|floatformat:2 }}</td>
+                                <td class="text-center w-auto">
+                                    <button class="btn btn-sm" onclick="carregarDadosReceita('{{ receita.id }}')" data-bs-toggle="modal" data-bs-target="#modal-nova-receita">
+                                        <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                    </button>
+                                </td>
+                                <td class="text-end w-auto">
+                                    <button class="btn btn-sm" onclick="abrirModalRemocao('{{ receita.descricao }}', '{% url 'remover_receita' receita.id %}')" data-toggle="modal" data-target="#modal-remocao">
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5">Nenhuma receita encontrada.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal-nova-receita" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-title-7">Cadastro de Receita</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'cadastrar_receita' %}" method="post" class="w-400 mw-full">
+                        {% csrf_token %}
+                        <input type="hidden" id="id_receita" name="id_receita">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id_descricao" class="pb-2">Descrição</label>
+                                <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao" value="{{ form.descricao.value }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_valor" class="pb-2">Valor</label>
+                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor" value="{{ form.valor.value }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_data" class="pb-2">Data</label>
+                                <input type="date" class="form-control mb-2 form-control-lg" id="id_data" name="data" value="{{ form.data.value }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn bg-gradient bg-dark btn-lg w-100 shadow-sm fw-bold text-white">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'js/financas/script.js' %}"></script>
+    </div>
+</section>
+
+{% endblock %}
