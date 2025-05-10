@@ -2,6 +2,7 @@
 <html lang="pt-br">
 
   <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icone-logo.svg">
@@ -10,10 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b144170c7e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/css/landing_page/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/halfmoon.min.css" rel="stylesheet" integrity="sha256-RjeFzczeuZHCyS+Gvz+kleETzBF/o84ZRHukze/yv6o=" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/cores/halfmoon.modern.css" rel="stylesheet" integrity="sha256-DD6elX+jPmbFYPsGvzodUv2+9FHkxHlVtQi0/RJVULs=" crossorigin="anonymous">
     <title>BeautySys</title>
+
   </head>
 
   <body>
+
     <header>
       <nav>
         <div class="nav-bar">
@@ -25,9 +30,9 @@
           </div>
           <div class="nav-list">
             <ul>
-              <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">Sobre</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">Depoimentos</a></li>
+              <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+              <li class="nav-item"><a href="#sobrenos" class="nav-link">Sobre</a></li>
+              <li class="nav-item"><a href="#depoimentos" class="nav-link">Depoimentos</a></li>
             </ul>
           </div>
           <div class="login-button">
@@ -37,74 +42,83 @@
       </nav>
       <div class="menu-mobile">
         <ul>
-          <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Sobre</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Depoimentos</a></li>
+          <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a href="#sobrenos" class="nav-link">Sobre</a></li>
+          <li class="nav-item"><a href="#depoimentos" class="nav-link">Depoimentos</a></li>
           <li class="nav-item"><a href="#" class="nav-link">Acessar</a></li>
         </ul>
       </div>
-      
       <div class="overlay"></div>
     </header>
 
     <main>
       <article>
-        <section class="conteudo-intro">
+        <section id="inicio" class="conteudo-intro">
           <div class="container-intro">
             <h1>Transforme a gestão do seu salão de beleza com praticidade e eficiência</h1>
             <p>Gerenciar um salão não precisa ser complicado. Com o BeautySys, você tem controle total da sua agenda, finanças, estoque e atendimento ao cliente em um só lugar – simples, intuitivo e feito especialmente para salões de beleza como o seu.</p>
             <button class="botao-start">Vamos começar!</button>
           </div>
-          <img src="images/illustration-intro.svg" alt="">
+          <!-- <img src="/static/img/landing_page/tela.png" alt="tela do sistema no celular" width="250px"> -->
         </section>
-        <section class="conteudo-info">
+
+        <section id="sobrenos" class="conteudo-info">
           <div class="container-info">
               <h2>O que torna nosso sistema diferente?</h2>
               <p>Nosso sistema de gerenciamento oferece tudo o que o seu salão precisa, sem complicações. Foi desenvolvido sob medida para atender às necessidades de salões modernos, facilitando o dia a dia da sua equipe e melhorando a experiência dos seus clientes.</p>
           </div>
           <div class="container-topicos">
-            
             <div class="item-topico">
-              <div class="titulo-topico"><div><i class="fa-solid fa-calendar-days fa-2xl" style="color: #780124;"></i></div><h3>Agendamentos organizados</h3></div>
-              <p>Registre horários de atendimento e evite confusões na agenda.</p>  
-            </div> 
-            
+              <div class="titulo-topico"><div><i class="fa-solid fa-calendar-days fa-2xl" style="color: #780124;"></i></div><h3>Agendamentos organizados</h3><p>Registre horários de atendimento e evite confusões na agenda.</p>  
+            </div>
             <div class="item-topico">
-              <div class="titulo-topico"><div><i class="fa-solid fa-chart-simple fa-2xl" style="color: #780124;"></i></div><h3>Controle Financeiro</h3></div>
-              <p>Registre entradas e saídas e visualize seus ganhos em gráficos.</p>  
+              <div class="titulo-topico"><div><i class="fa-solid fa-chart-simple fa-2xl" style="color: #780124;"></i></div><h3>Controle Financeiro</h3><p>Registre entradas e saídas e visualize seus ganhos em gráficos.</p></div>
             </div> 
-            
             <div class="item-topico">
-              <div class="titulo-topico"><div><i class="fa-solid fa-bell fa-2xl" style="color: #780124;"></i></div><h3>Lembretes Automáticos</h3></div>
-              <p>Envie avisos para clientes confirmarem os horários.</p>  
+              <div class="titulo-topico"><div><i class="fa-solid fa-bell fa-2xl" style="color: #780124;"></i></div><h3>Lembretes Automáticos</h3><p>Envie avisos para clientes confirmarem os horários.</p></div>  
             </div> 
-          
           </div>
         </section>
-        <section class="comentarios">
+
+        <section id="depoimentos" class="comentarios">
           <h2>Veja o que nossos clientes dizem</h2>
-          <div class="carrossel">
-            <div class="cards slides">
-              <div class="card-user slide">
-                <img src="/static/img/landing_page/user1.png" alt="foto de uma usuaria">
-                <h3>Rafaela Souza, cabeleireiro e gestor do Estúdio RStyle</h3>
-                <p>"Tudo no mesmo lugar. Simples e eficiente. Controle de estoque, financeiro e agendamento com acesso pelo celular. É exatamente o que eu precisava."</p>
+          <div id="carousel-example-8" class="carousel slide w-100" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+              <div class="carousel-item active">
+                <div class="card-user slide">
+                  <img src="/static/img/landing_page/user1.png" class="d-block" alt="depoimento do usuario">
+                  <h3>Rafaela Souza, cabeleireiro e gestor do Estúdio RStyle</h3>
+                  <p>"Tudo no mesmo lugar. Simples e eficiente. Controle de estoque, financeiro e agendamento com acesso pelo celular. É exatamente o que eu precisava."</p>
+                </div>
               </div>
-              <div class="card-user slide">
-                <img src="/static/img/landing_page/user2.png" alt="anisha li">
-                <h3>Camila Rocha, proprietária do Salão Bella Arte</h3>
-                <p>"Meus clientes amam os lembretes automáticos! Além de evitar faltas, eles se sentem mais bem cuidados. O sistema me ajuda a manter a agenda sempre cheia."</p>
+              
+              <div class="carousel-item">
+                <div class="card-user slide">
+                  <img src="/static/img/landing_page/user2.png" class="d-block" alt="depoimento do usuario">
+                  <h3>Camila Rocha, proprietária do Salão Bella Arte</h3>
+                  <p>"Meus clientes amam os lembretes automáticos! Além de evitar faltas, eles se sentem mais bem cuidados. O sistema me ajuda a manter a agenda sempre cheia."</p>
+                </div>
               </div>
-              <div class="card-user slide">
-                <img src="/static/img/landing_page/user3.png" alt="anisha li">
-                <h3>Juliana Silva, proprietária do Salão Look Glam</h3>
-                <p>"Melhor investimento que fiz para o salão!"
-                  "Desde que começamos a usar o sistema, a organização e a eficiência aumentaram muito. As vendas também cresceram porque conseguimos analisar melhor os resultados."</p>
+              <div class="carousel-item">
+                <div class="card-user slide">
+                  <img src="/static/img/landing_page/user3.png" class="d-block" alt="depoimento do usuario">
+                  <h3>Juliana Silva, proprietária do Salão Look Glam</h3>
+                  <p>"Melhor investimento que fiz para o salão!"
+                    "Desde que começamos a usar o sistema, a organização e a eficiência aumentaram muito. As vendas também cresceram porque conseguimos analisar melhor os resultados."</p>
+                </div>
               </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-example-8" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-example-8" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
 
-            <div class="indicators"></div>
-            
           </div>
           <div>
             <button class="botao-start">Vamos começar!</button>
@@ -124,6 +138,7 @@
           </div>
         </div>
       </section>
+
       <section>
         <div class="rodape">
           <div class="logo-icones">
@@ -150,8 +165,10 @@
          
         </div>
       </section>
+
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-CDOy6cOibCWEdsRiZuaHf8dSGGJRYuBGC+mjoJimHGw=" crossorigin="anonymous"></script>
     <script src="/static/js/landing_page/script.js"></script>
 
   </body>
