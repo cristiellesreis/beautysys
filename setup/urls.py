@@ -28,4 +28,5 @@ urlpatterns = [
     path('financas/', include('app_financas.urls')),
     path('usuarios/', include('app_cadastro_usuario.urls')),
     path('perfil/', include('app_perfil.urls')),
+    path('login/', LoginView.as_view(), name='login'),
 ]

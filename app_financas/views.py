@@ -1,5 +1,4 @@
 from calendar import month_name
-
 from django.contrib import messages
 from django.db.models import Sum
 from django.http import JsonResponse
@@ -7,11 +6,11 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.timezone import now
-
 from .forms import ReceitaForm, DespesaForm
 from .models import Receita, Despesa
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def financas(request):
     return render(request, 'financas/financas.html')
 

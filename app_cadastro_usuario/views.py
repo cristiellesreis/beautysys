@@ -5,6 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
 
 class CadastroView(View):
     def get(self, request):
@@ -39,6 +40,8 @@ class CadastroView(View):
 
 class LoginView(View):
     def get(self, request):
+        if not request.user.is_authenticated and 'next' in request.GET:
+            messages.warning(request, "Você não está logado.")
         return render(request, "cadastro_usuario/login.html")
 
     def post(self, request):
