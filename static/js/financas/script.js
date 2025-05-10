@@ -7,7 +7,6 @@ function prepararNovoCadastroReceita() {
     document.getElementById('modal-title-7').textContent = 'Cadastro de Receita';
 }
 
-
 function carregarDadosReceita(id) {
     fetch(`/financas/receitas/obter/${id}/`)
         .then(response => response.json())
@@ -72,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     backgroundColor: null
                 },
                 title: { 
-                    text: 'Resumo Financeiro Mensal',
+                    text: '',
                     style: {
                         color: '#5c6e8a',
                         fontSize: '20px',
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 },
                 subtitle: { 
-                    text: 'Receitas e Despesas',
+                    text: '',
                     style: {
                         color: '#5c6e8a',
                         fontSize: '14px',
@@ -158,5 +157,5 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
             
-    });
+});
 

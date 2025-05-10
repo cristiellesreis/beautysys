@@ -2,5 +2,5 @@
 from .views import perfil_view
 
 urlpatterns = [
-    path('perfil/', perfil_view, name='perfil'),
+    path('', perfil_view, name='perfil'),
 ]

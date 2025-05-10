@@ -3,7 +3,7 @@
 {% load static %}
 {% load shared_tags %}
 
-<section class="p-5">
+<section class="p-3 m-3">
     
     {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
 
@@ -18,7 +18,7 @@
 
     {% show_messages %}
 
-    <div class="container m-0 p-0">
+    <div class="container m-0 p-0 g-3 mb-4">
         <div class="container-fluid w-100 d-flex justify-content-start mb-4 px-0">
             <button class="btn bg-gradient bg-dark fw-bold text-white btn-lg d-flex align-items-center gap-2"
                     onclick="prepararNovoCadastroDespesa()" type="button" data-bs-toggle="modal" data-bs-target="#modal-nova-despesa">
@@ -27,8 +27,7 @@
             </button>
         </div>
         
-        <div id="receitas">
-
+        <div id="receitas" class="container m-0 p-0" style="max-width: 1000px;">
             <div class="row mb-5 px-0">
                 <div class="col-sm-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
                     <form method="get" action="{% url 'listar_despesas' %}" class="d-flex flex-grow-1 gap-2">
@@ -43,45 +42,49 @@
                     </form>
                 </div>
             </div>
-            
-            <div class="container-fluid w-auto fs-6 text-start px-0">
-                <div class="table-responsive" style="max-width: 900px;">
-                    <table class="table table-striped table-hover border-light text-dark">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col" class="w-50">Descrição</th>
-                                <th scope="col" class="text-nowrap w-auto">Data</th>
-                                <th scope="col" class="text-nowrap w-auto">Valor</th>
-                                <th scope="col" class="text-center w-auto">Editar</th>
-                                <th scope="col" class="text-end w-auto">Excluir</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for despesa in despesas %}
-                            <tr>
-                                <td data-label="Descrição">{{ despesa.descricao }}</td>
-                                <td data-label="Data" class="text-nowrap w-auto">{{ despesa.data }} </td>
-                                <td data-label="Valor" class="text-nowrap w-auto">R$ {{ despesa.valor }}</td>
-                                <td data-label="Editar" class="text-center w-auto">
-                                    <button class="btn btn-sm" onclick="carregarDadosDespesa('{{ despesa.id }}')"
-                                        data-bs-toggle="modal" data-bs-target="#modal-nova-despesa">
-                                        <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
-                                    </button>
-                                </td>
-                                <td data-label="Excluir" class="text-end w-auto">
-                                    <button class="btn btn-sm" onclick="abrirModalRemocao('{{ despesa.descricao }}', '{% url 'remover_despesa' despesa.id %}')"
-                                        data-toggle="modal" data-target="#modal-remocao">
-                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5">Nenhuma despesa encontrada.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="card shadow mt-4">
+                <div class="card-header text-white" style="background-color: #911b36;">
+                    <h5 class="card-title mb-0">Lista de Despesas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover border-light text-dark">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" class="w-50">Descrição</th>
+                                    <th scope="col" class="text-nowrap w-auto">Data</th>
+                                    <th scope="col" class="text-nowrap w-auto">Valor</th>
+                                    <th scope="col" class="text-center w-auto">Editar</th>
+                                    <th scope="col" class="text-end w-auto">Excluir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for despesa in despesas %}
+                                <tr>
+                                    <td data-label="Descrição">{{ despesa.descricao }}</td>
+                                    <td data-label="Data" class="text-nowrap w-auto">{{ despesa.data }} </td>
+                                    <td data-label="Valor" class="text-nowrap w-auto">R$ {{ despesa.valor }}</td>
+                                    <td data-label="Editar" class="text-center w-auto">
+                                        <button class="btn btn-sm" onclick="carregarDadosDespesa('{{ despesa.id }}')"
+                                            data-bs-toggle="modal" data-bs-target="#modal-nova-despesa">
+                                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                        </button>
+                                    </td>
+                                    <td data-label="Excluir" class="text-end w-auto">
+                                        <button class="btn btn-sm" onclick="abrirModalRemocao('{{ despesa.descricao }}', '{% url 'remover_despesa' despesa.id %}')"
+                                            data-toggle="modal" data-target="#modal-remocao">
+                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5">Nenhuma despesa encontrada.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,19 +121,16 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-lg bg-gradient bg-dark fw-bold text-white btn-block w-100">Salvar</button>
+                            <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white btn-block w-100" style="background-color: #911b36;">Salvar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        
+
         <script src="{% static 'js/financas/script.js' %}"></script>
     </div>
-
-
+    
 </section>
-
-
 
 {% endblock %}

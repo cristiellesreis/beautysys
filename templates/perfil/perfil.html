@@ -2,12 +2,11 @@
 {% block conteudo %}
 {% load shared_tags %}
 
-<section class="p-5">
+<section class="p-3 m-3">
 
   {% nav_menu "Perfil=perfil" %}
 
   <div class="container m-0 p-0">
-
     <div class="content mb-5">
       <div class="container p-0 m-0">
         <h1 class="fw-normal text-body-emphasis">Alterar Dados Cadastrais</h1>
@@ -18,18 +17,16 @@
     {% show_messages %}
 
     <div class="row align-items-start g-3" style="max-width: 1000px;">
-
       <div class="col-12 col-lg-3 d-flex justify-content-center">
         <div class="position-relative">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" 
-               alt="Usuário" class="rounded-circle shadow-sm border border-2" width="180" height="180">
+               alt="Usuário" class="rounded-circle shadow-sm border border-2" width="120" height="120">
           <input type="file" id="upload-foto" class="d-none">
-          <label for="upload-foto" class="position-absolute bottom-0 end-0 me-1 mb-1 text-white bg-dark rounded-circle p-2 shadow-sm" title="Alterar foto">
+          <label for="upload-foto" class="position-absolute bottom-0 end-0 me-1 mb-1 text-white rounded-circle p-2 shadow-sm" style="background-color: #911b36;" title="Alterar foto">
             <i class="fa-solid fa-camera fa-lg"></i>
           </label>
         </div>
       </div>
-
       <div class="col-12 col-lg-8">
         <form class="row g-4 needs-validation" method="post" novalidate>
           {% csrf_token %}
@@ -83,12 +80,13 @@
           </div>
 
           <div class="col-12 mt-3 mt-5">
-            <button type="submit" class="btn bg-gradient bg-dark btn-lg w-100 shadow-sm fw-bold text-white">Salvar Alterações</button>
+            <button type="submit" class="btn bg-gradient btn-lg w-100 shadow-sm fw-bold text-white" style="background-color: #911b36;">Salvar Alterações</button>
           </div>
         </form>
       </div>
     </div>
   </div>
+
 </section>
 
 {% endblock %}
