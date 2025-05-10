@@ -1,0 +1,585 @@
+:root{
+    --primary-bright-red: hsl(342, 98%, 24%);    
+    --primary-dark-blue: hsl(228, 39%, 23%);
+
+    --neutral-dark-grayish-blue: hsl(227, 12%, 61%);
+    --neutral-very-dark-blue: hsl(233, 12%, 13%);
+    --neutral-very-light-gray: hsl(0, 0%, 98%);
+
+    --font: "Be Vietnam Pro", sans-serif;
+}
+
+*{
+    margin: 0;
+    box-sizing: 0;
+    padding: 0;
+}
+
+main{
+    display: grid;
+    justify-content: center;
+}
+
+body{
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hide{
+    display: none;
+}
+
+.nav-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    width: 100%;
+    gap: 6rem;
+}
+
+.nav-list{
+    display: flex;
+    align-items: center;
+}
+
+.nav-list a:hover{
+    opacity: .5;
+}
+
+.nav-list ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-left: 13rem;
+}
+
+.nav-item{
+    margin: 0 15px;
+}
+
+.nav-link{
+    text-decoration: none;
+    font-family: var(--font);
+    font-size: .9rem;
+    color: var(--primary-dark-blue);
+    font-weight: bold;
+}
+
+.mobile-menu-icon{
+    display: none;
+}
+
+.menu-mobile{
+    display: none;
+}
+
+.botao-start, .botao-email, .botao-start-footer{
+    width: 11rem;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: var(--font);
+    color: var(--neutral-very-light-gray);
+    background-color: var(--primary-bright-red);
+    border-radius: 2rem;
+    border:none;
+    box-shadow: 0px 8px 15px -5px var(--primary-bright-red);
+    cursor: pointer;
+}
+
+.botao-email{
+    width: 4rem;
+    box-shadow: none;
+}
+
+.botao-email:hover{
+    background-color: var(--primary-bright-red);
+}
+
+.botao-start:hover{
+    opacity: .60;
+}
+
+.conteudo-intro, .conteudo-info{
+    display: grid;
+    grid-template-columns: 500px 500px;
+    margin-top: 3rem;
+    gap: 2rem;
+    margin-top: 4rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.container-intro{
+    width: 22rem;
+    margin-bottom: 3rem;
+}
+
+.conteudo-info{
+    align-items: flex-start;
+}
+
+.container-info{
+    width: 22rem;
+}
+
+.container-intro h1, .container-info h2, .comentarios h2, .rodape-banner h2{
+    font-family: var(--font);
+    font-size: 2.5rem;
+    color: var(--primary-dark-blue);
+}
+
+.container-info h2, .comentarios h2, .rodape-banner h2{
+    font-size: 2rem;
+}
+
+.item-topico h3, .card-user h3{
+    font-family: var(--font);
+    font-size: 16px;
+    color: var(--primary-dark-blue);
+}
+
+.card-user h3{
+    margin-bottom: 1rem;
+    text-align: center;
+    width: 15rem;
+    margin-top: 1.5rem;
+}
+
+.container-intro p, .container-info p, .item-topico p, .card-user p{
+    font-family: var(--font);
+    color: var(--neutral-dark-grayish-blue);
+    font-size: 16px;
+    line-height: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.item-topico p{
+    padding-left: 5rem;
+    width: 28rem;
+}
+
+.container-intro button{
+    margin-top: 2rem;
+}
+
+.container-topicos{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.container-topicos span{
+    background-color: var(--primary-bright-red);
+    border-radius: 1rem;
+    width: 4rem;
+    color: var(--neutral-very-light-gray);
+    font-family: var(--font);
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titulo-topico{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.carrossel{
+    width: 1096px;
+    overflow-x: auto;
+}
+
+.carrossel::-webkit-scrollbar{
+    display: none;
+}
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 2rem 0 0 1rem;
+}
+
+.card-user{
+    background-color: var(--neutral-very-light-gray);
+    width: 30rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    border-radius: 2rem;
+}
+
+.card-user img{
+    width: 9rem;
+    position: relative;
+    margin-top: -2rem;
+}
+
+.card-user p{
+    text-align: center;
+    margin: 0 2.5rem 0 2.5rem;
+    width: 26rem;
+}
+
+.comentarios{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 12rem;
+    margin-top: 5rem;
+}
+
+.comentarios button{
+    margin-top: 3rem;
+}
+
+.rodape-banner{
+    height: 10rem;
+    background-color: var(--primary-bright-red);
+    display: flex;
+    justify-content: center;
+    gap: 35rem;
+    align-items: center;
+}
+
+.rodape-banner h2{
+    color: var(--neutral-very-light-gray);
+    width: 25rem;
+}
+
+.botao-start-footer{
+    background-color: var(--neutral-very-light-gray);
+    color: var(--primary-bright-red);
+    font-weight: 700;
+}
+
+.botao-start-footer :hover{
+    color:#d34972;
+}
+
+.rodape{
+    height: 15rem;
+    background-color: var(--neutral-very-dark-blue);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;}
+
+
+.logo-icones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 12rem;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.logo-icones a{
+    margin-right: .5rem;
+}
+
+.svg-img{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.svg-img:hover {
+    filter: brightness(0) saturate(100%) invert(11%) sepia(43%) saturate(6538%) hue-rotate(330deg) brightness(81%) contrast(108%);
+}
+
+.rodape-email{
+    width: 20rem;
+    text-align: end;
+}
+
+.email{
+    margin-bottom: 3rem;
+}
+
+.email input{
+    height: 2.5rem;
+    width: 15rem;
+    border-radius: 1.5rem;
+    border: none;
+    text-align: center;
+    font-family: var(--font);
+    margin-right: .5rem;
+}
+
+.copyright{
+    color: var(--neutral-very-light-gray);
+    font-family: var(--font);
+    opacity: .6;
+    font-size:13px;
+}
+
+
+footer{
+    width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+
+    body{
+        background-image: url(/images/bg-simplify-section-desktop.svg);
+        background-position: top center;
+        background-repeat: repeat-y;
+        background-size: auto;
+    }
+
+    .nav-bar{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2rem 0 2rem;
+        width: auto;
+        align-items: center;
+        position: relative;
+        z-index: 2000;
+    }
+
+    .nav-item{
+        display: none;
+        padding-bottom: 2rem;
+    }
+
+    .nav-list{
+        display: none;
+    }
+
+    .nav-link{
+        font-size: 1.2rem;
+    }
+    
+
+    .login-button{
+        display: none;
+    }
+
+    .mobile-menu-icon{
+        display: block;
+    }
+
+    .mobile-menu-icon button{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .menu-mobile ul{
+        display: flex;
+        flex-direction: column;
+        text-align: center ;
+        margin: 3rem 0rem 1rem 0rem;    
+    }
+
+    .menu-mobile .nav-item{
+        display: block;
+    }
+
+    .menu-mobile{
+        width: 87%;
+        margin: 2rem 0rem 0rem 1.5rem;
+        display: none;
+        background-color: #ffffff;
+        border-radius: .5rem;
+        box-shadow: .3px .3px 1px;
+        position:absolute;
+        z-index: 2000;
+    }
+
+    .open{
+        display:block;
+    }
+
+    .icon{
+        color: var(--primary-dark-blue);
+    }
+
+    .response-menu{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 2rem;
+    }
+
+    .conteudo-intro, .conteudo-info{
+        display: flex;
+        flex-direction: column-reverse;
+        justify-items: center;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .conteudo-info{
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .conteudo-intro img{
+        width: 100%;
+    }
+
+    .container-topicos{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+    }
+
+    .titulo-topico{
+        border-radius: 2rem 0 0 2rem;
+        width: 22rem;
+        display: flex;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .item-topico{
+        width: 22rem;
+        text-align: justify;
+    }
+
+    .item-topico p{
+        width: 20rem;
+        padding: 0 1rem;
+        text-align: left;
+    }
+
+    .carrossel{
+        width: 375px;
+        overflow: hidden;
+    }
+
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .slide {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    .indicators {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .indicator {
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border: 1px solid var(--primary-bright-red);
+        border-radius: 50%;
+        margin: 0 3px;
+        cursor: pointer;
+    }
+      
+    .indicator.active {
+        background-color: var(--primary-bright-red);
+    }
+
+    .cards{
+        gap: 0rem;
+        margin: 2rem 0 0 0rem;
+    }
+
+    .card-user{
+        width: 100%;
+        height: 20rem;
+        margin-top: 3rem;
+    }
+
+    .card-user p{
+        width: 20rem;
+    }
+
+    .comentarios{
+        margin-bottom: 5rem;
+    }
+    .comentarios h2{
+        text-align: center;
+    }
+
+    .rodape-banner h2{
+        width: 23rem;
+    }
+
+    .rodape-banner{
+        height: 20rem;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+    }
+
+    .rodape{
+        background-color: var(--neutral-very-dark-blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rodape-email{
+        position: absolute;
+        display: flex;
+        align-content: space-between;
+        flex-direction: column;
+        gap: 21rem;
+        align-items: center;
+    }
+
+    .logo-icones{
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 7rem;
+    }
+
+    .email input{
+        height: 2.5rem;
+        width: 15rem;
+    }
+
+    .icones-redes{
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .icones-redes img{
+        width: 2rem;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 999;
+    }
+      
+    .overlay.show {
+        display: block;
+    }
+}

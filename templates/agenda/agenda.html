@@ -3,7 +3,7 @@
 {% load static %}
 {% load shared_tags %}
 
-<section class="p-5">
+<section class="p-3 m-3">
     
     {% nav_menu "Agendamentos=agendamento,Clientes=lista_clientes" %}
 
@@ -19,7 +19,7 @@
     {% show_messages %}
 
     <div class="container m-0 p-0">
-        <div id="agendamentos">
+        <div id="agendamentos" class="container m-0 p-0" style="max-width: 1000px;">
             <div class="container-fluid w-100 d-flex justify-content-start mb-5 px-0">
                 <button class="btn btn-lg bg-gradient bg-dark fw-bold text-white d-flex align-items-center gap-2"
                         onclick="prepararNovoAgendamento()" type="button" data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
@@ -28,55 +28,60 @@
                 </button>
             </div>
         
-            <div class="container-fluid w-auto fs-6 text-start px-0">
-                <div class="table-responsive" style="max-width: 900px;">
-                    <table class="table table-striped table-hover border-light text-dark">
-                        <thead  class="table-dark">
-                            <tr>
-                                <th scope="col" class="w-20">Cliente</th>
-                                <th scope="col" class="text-nowrap w-auto">Data/Hora Início</th>
-                                <th scope="col" class="text-nowrap w-auto">Data/Hora Fim</th>
-                                <th scope="col" class="w-20">Serviço</th>
-                                <th scope="col" class="text-nowrap w-auto">Status</th>
-                                <th scope="col" class="text-center w-auto">Editar</th>
-                                <th scope="col" class="text-end w-auto">Excluir</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for agendamento in agendamentos %}
-                            <tr>
-                                <td data-label="Cliente">{{ agendamento.cliente.nome }}</td>
-                                <td data-label="Data/Hora Inicio" class="text-nowrap w-auto">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
-                                <td data-label="Data/Hora Fim" class="text-nowrap w-auto">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
-                                <td data-label="Serviço">{{ agendamento.servico }}</td>
-                                <td data-label="Status" class="text-nowrap w-auto">
-                                    <span class="badge
-                                        {% if agendamento.status == 'concluido' %}bg-success
-                                        {% elif agendamento.status == 'cancelado' %}bg-danger
-                                        {% else %}bg-info{% endif %}">
-                                        {{ agendamento.get_status_display }}
-                                    </span>
-                                </td>
-                                <td data-label="Editar" class="text-center w-auto">
-                                    <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
-                                        data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
-                                        <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
-                                    </button>
-                                </td>
-                                <td data-label="Excluir" class="text-end w-auto">
-                                    <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
-                                        data-toggle="modal" data-target="#modal-remocao">
-                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="7">Nenhum agendamento encontrado.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="card shadow mt-4">
+                <div class="card-header text-white" style="background-color: #911b36;">
+                    <h5 class="card-title mb-0">Agendamentos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover border-light text-dark">
+                            <thead  class="table-dark">
+                                <tr>
+                                    <th scope="col" class="w-20">Cliente</th>
+                                    <th scope="col" class="text-nowrap w-auto">Data/Hora Início</th>
+                                    <th scope="col" class="text-nowrap w-auto">Data/Hora Fim</th>
+                                    <th scope="col" class="w-20">Serviço</th>
+                                    <th scope="col" class="text-nowrap w-auto">Status</th>
+                                    <th scope="col" class="text-center w-auto">Editar</th>
+                                    <th scope="col" class="text-end w-auto">Excluir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agendamento in agendamentos %}
+                                <tr>
+                                    <td data-label="Cliente">{{ agendamento.cliente.nome }}</td>
+                                    <td data-label="Data/Hora Inicio" class="text-nowrap w-auto">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
+                                    <td data-label="Data/Hora Fim" class="text-nowrap w-auto">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
+                                    <td data-label="Serviço">{{ agendamento.servico }}</td>
+                                    <td data-label="Status" class="text-nowrap w-auto">
+                                        <span class="badge
+                                            {% if agendamento.status == 'concluido' %}bg-success
+                                            {% elif agendamento.status == 'cancelado' %}bg-danger
+                                            {% else %}bg-info{% endif %}">
+                                            {{ agendamento.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td data-label="Editar" class="text-center w-auto">
+                                        <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
+                                            data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+                                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                                        </button>
+                                    </td>
+                                    <td data-label="Excluir" class="text-end w-auto">
+                                        <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
+                                            data-toggle="modal" data-target="#modal-remocao">
+                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7">Nenhum agendamento encontrado.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,7 +142,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-lg bg-gradient bg-dark fw-bold text-white btn-block w-100">Salvar</button>
+                            <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white btn-block w-100" style="background-color: #911b36;">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -148,6 +153,5 @@
     </div>
 
 </section>
-
 
 {% endblock %}
