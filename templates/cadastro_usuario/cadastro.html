@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<div class="container mt-5">
+    <h2>Cadastro de Usuário</h2>
+    <form method="POST" action="{% url 'cadastro' %}">
+        {% csrf_token %}
+        <input class="form-control mt-2" type="text" name="usuario" placeholder="Nome de usuário" required>
+        <input class="form-control mt-2" type="email" name="email" placeholder="Email" required>
+        <input class="form-control mt-2" type="email" name="emailconfirm" placeholder="Confirmar Email" required>
+        <input class="form-control mt-2" type="password" name="senha" placeholder="Senha" required>
+        <input class="form-control mt-2" type="password" name="senhaconfirm" placeholder="Confirmar Senha" required>
+
+        <button class="btn btn-success mt-3" type="submit">Cadastrar</button>
+        {% if error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

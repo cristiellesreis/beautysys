@@ -48,9 +48,12 @@
             <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page"><i class="fa-solid fa-boxes-stacked me-2"></i> Estoque</a>
         </li>
       </ul>
-      <a href="#" class="btn text-decoration-none fs-5 mt-auto">
-        sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
-      </a>
+      
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn text-decoration-none fs-5 mt-auto">
+          sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+      {% endif %}
     </div>
   </nav>
 
@@ -58,7 +61,19 @@
     <div class="container-fluid d-flex justify-content-end">
       <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-example" class="btn btn-secondary d-md-none me-2">
         <i class="fa fa-bars"></i>
-      </button>  
+      </button>
+
+
+
+
+
+      
+
+
+
+
+
+
     </div>
   </nav>
 

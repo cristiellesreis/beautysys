@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from dotenv import load_dotenv #type: ignore
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
 
 load_dotenv()
 
@@ -29,6 +30,8 @@ SECRET_KEY = 'django-insecure-n120uon2r)rokrj_beqn)d^4sl9-ucn6=0@%=_oktk2d@zl(58
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 
 # Application definition
@@ -79,6 +82,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
+
+LOGIN_URL = '/login/'
 
 
 # Database

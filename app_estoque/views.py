@@ -4,7 +4,9 @@ from .services import EstoqueService
 from .forms import ItemEstoqueForm
 from .exceptions import QuantidadeInsuficiente
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def estoque(request):
     lista_estoque = {}
     form = ItemEstoqueForm()

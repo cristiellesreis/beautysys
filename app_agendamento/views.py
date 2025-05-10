@@ -3,11 +3,12 @@ from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from app_agendamento.forms import ClienteForm, AgendamentoForm
 from app_agendamento.models import Cliente, Agendamento
 
-
+@login_required
 def agendamento(request):
     agendamentos = Agendamento.objects.all().order_by('-data_hora_inicio')
     todos_clientes = Cliente.objects.all().order_by('nome')
