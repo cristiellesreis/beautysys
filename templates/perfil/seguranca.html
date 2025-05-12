@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load shared_tags %}
+
+{% block conteudo %}
+<section class="p-3 m-3">
+
+    {% nav_menu "Perfil=perfil, Segurança=seguranca" %}
+
+    <div class="container m-0 p-0">
+        <div class="content mb-5">
+          <div class="container p-0 m-0">
+            <h1 class="fw-normal text-body-emphasis">Alterar Dados Cadastrais</h1>
+            <p class="text-muted">Atualize as informações do seu perfil abaixo.</p>
+          </div>
+        </div>
+
+        <div class="row align-items-start g-3" style="max-width: 1000px;">
+
+            <form action="/alterar-senha" method="POST" class="g-4" id="alterarSenhaForm">
+                
+                <div class="form-group col-12 col-md-6 mb-3">
+                  <label class="form-label" for="senha_atual">Senha atual</label>
+                  <input
+                    type="password"
+                    id="senha_atual"
+                    name="senha_atual"
+                    class="form-control form-control-lg shadow-sm"
+                    required
+                    pattern=".{6,}"
+                    title="A senha deve ter pelo menos 6 caracteres"
+                  />
+                  <small class="form-text text-muted">A senha deve ter pelo menos 6 caracteres.</small>
+                  <div class="invalid-feedback">Senha incorreta. Tente novamente.</div>
+                </div>
+              
+                <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="nova_senha">Nova senha</label>
+                  <input
+                    type="password"
+                    id="nova_senha"
+                    name="nova_senha"
+                    class="form-control form-control-lg shadow-sm"
+                    required
+                    pattern=".{6,}"
+                    title="A senha deve ter pelo menos 6 caracteres"
+                  />
+                  <small class="form-text text-muted">A senha deve ter pelo menos 6 caracteres.</small>
+                </div>
+              
+                <div class="form-group col-12 col-md-6 mb-3">
+                  <label for="confirmar_senha">Confirmar nova senha</label>
+                  <input
+                    type="password"
+                    id="confirmar_senha"
+                    name="confirmar_senha"
+                    class="form-control form-control-lg shadow-sm"
+                    required
+                    pattern=".{6,}"
+                    title="A senha deve ter pelo menos 6 caracteres"
+                  />
+                  <small class="form-text text-muted">A senha deve ter pelo menos 6 caracteres.</small>
+                </div>
+
+                <div class="col-12 col-md-6 mt-3 mt-5">
+                    <button type="submit" class="btn bg-gradient btn-lg w-100 shadow-sm fw-bold text-white" style="background-color: #911b36;">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

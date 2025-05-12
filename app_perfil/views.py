@@ -14,3 +14,6 @@ def perfil_view(request):
     else:
         form = PerfilForm(instance=perfil)
     return render(request, 'perfil/perfil.html', {'form': form})
+
+def seguranca(request):
+    return render(request, 'perfil/seguranca.html')
