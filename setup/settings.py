@@ -84,6 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'setup.wsgi.application'
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
 
 
 # Database
