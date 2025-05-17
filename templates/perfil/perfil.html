@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 {% load shared_tags %}
+{% load static %}
 
 <section class="p-3 m-3" aria-labelledby="titulo-perfil">
 
@@ -16,82 +17,94 @@
 
     {% show_messages %}
 
-    <div class="row align-items-start g-3" style="max-width: 1000px;">
-      <div class="col-12 col-lg-3 d-flex justify-content-center">
-        <div class="position-relative">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" 
-               alt="Foto de perfil do usuário" class="rounded-circle shadow-sm border border-2" width="120" height="120">
-          <input type="file" id="upload-foto" class="d-none" aria-label="Selecionar nova foto de perfil">
-          <label for="upload-foto" class="position-absolute bottom-0 end-0 me-1 mb-1 text-white rounded-circle p-2 shadow-sm" 
-                 style="background-color: #911b36;" title="Alterar foto de perfil" aria-label="Alterar foto de perfil">
-            <i class="fa-solid fa-camera fa-lg" aria-hidden="true"></i>
-          </label>
-        </div>
-      </div>
-      <div class="col-12 col-lg-8">
-        <form class="row g-4 needs-validation" method="post" novalidate aria-describedby="descricao-perfil">
+    <form enctype="multipart/form-data" method="post" novalidate aria-describedby="descricao-perfil">
           {% csrf_token %}
 
-          <div class="col-12 col-md-6">
-            <label for="nomeSalao" class="form-label">Nome do Salão</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="nomeSalao" name="nome_salao" placeholder="Nome do salão" required value="{{ form.nome_salao.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Por favor, informe o nome do salão.</div>
+      <div class="row align-items-start g-3" style="max-width: 1000px;">
+
+          <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <div class="position-relative">
+
+              {% if perfil.imagem %}
+                <img id="preview-img" src="{{ perfil.imagem.url }}" alt="Foto de perfil do usuário" class="rounded-circle shadow-sm border border-2" width="120" height="120">
+              {% else %}
+                <img id="preview-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" alt="Foto de perfil do usuário"
+                     class="rounded-circle shadow-sm border border-2" width="120" height="120">
+              {% endif %}
+
+              <input type="file" id="upload-foto" name="imagem" class="d-none" aria-label="Selecionar nova foto de perfil">
+
+              <label for="upload-foto" class="position-absolute bottom-0 end-0 me-1 mb-1 text-white rounded-circle p-2 shadow-sm"
+                     style="background-color: #911b36;" title="Alterar foto de perfil" aria-label="Alterar foto de perfil">
+                <i class="fa-solid fa-camera fa-lg" aria-hidden="true"></i>
+              </label>
+            </div>
+          </div>
+          <div class="col-12 col-lg-8">
+            <div class="col-12 col-md-6">
+              <label for="nomeSalao" class="form-label">Nome do Salão</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="nomeSalao" name="nome_salao" placeholder="Nome do salão" required value="{{ form.nome_salao.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Por favor, informe o nome do salão.</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="telefone" class="form-label">Telefone</label>
+              <input type="tel" class="form-control form-control-lg shadow-sm" id="telefone" name="telefone" placeholder="(00) 00000-0000" required value="{{ form.telefone.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe um telefone.</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control form-control-lg shadow-sm" id="email" name="email" placeholder="exemplo@email.com" required value="{{ request.user.email }}">
+              <div class="invalid-feedback">Informe um email válido.</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="cnpj" class="form-label">CNPJ</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required value="{{ form.cnpj.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe o CNPJ.</div>
+            </div>
+
+            <div class="col-12">
+              <label for="endereco" class="form-label">Endereço</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="endereco" name="endereco" placeholder="Rua, número e complemento" required value="{{ form.endereco.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe o endereço completo.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="cidade" class="form-label">Cidade</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="cidade" name="cidade" placeholder="Cidade" required value="{{ form.cidade.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe a cidade.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="estado" class="form-label">Estado (UF)</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="estado" name="estado" placeholder="SP" maxlength="2" required value="{{ form.estado.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe o estado.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="cep" class="form-label">CEP</label>
+              <input type="text" class="form-control form-control-lg shadow-sm" id="cep" name="cep" placeholder="00000-000" required value="{{ form.cep.value|default_if_none:'' }}">
+              <div class="invalid-feedback">Informe o CEP.</div>
+            </div>
+
+            <div class="col-12 mt-3 mt-5 ">
+
+              <button type="submit" class="w-100 btn bg-gradient btn-primary btn-lg mt-3 fw-bold"
+                style="background-color: #911b36;" aria-label="Salvar alterações do perfil">
+                Salvar Alterações
+              </button>
+
+            </div>
+
           </div>
 
-          <div class="col-12 col-md-6">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input type="tel" class="form-control form-control-lg shadow-sm" id="telefone" name="telefone" placeholder="(00) 00000-0000" required value="{{ form.telefone.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe um telefone.</div>
-          </div>
-
-          <div class="col-12 col-md-6">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control form-control-lg shadow-sm" id="email" name="email" placeholder="exemplo@email.com" required value="{{ request.user.email }}">
-            <div class="invalid-feedback">Informe um email válido.</div>
-          </div>
-
-          <div class="col-12 col-md-6">
-            <label for="cnpj" class="form-label">CNPJ</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required value="{{ form.cnpj.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe o CNPJ.</div>
-          </div>
-
-          <div class="col-12">
-            <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="endereco" name="endereco" placeholder="Rua, número e complemento" required value="{{ form.endereco.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe o endereço completo.</div>
-          </div>
-
-          <div class="col-md-6">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="cidade" name="cidade" placeholder="Cidade" required value="{{ form.cidade.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe a cidade.</div>
-          </div>
-
-          <div class="col-md-3">
-            <label for="estado" class="form-label">Estado (UF)</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="estado" name="estado" placeholder="SP" maxlength="2" required value="{{ form.estado.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe o estado.</div>
-          </div>
-
-          <div class="col-md-3">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control form-control-lg shadow-sm" id="cep" name="cep" placeholder="00000-000" required value="{{ form.cep.value|default_if_none:'' }}">
-            <div class="invalid-feedback">Informe o CEP.</div>
-          </div>
-
-
-          <div class="col-12 mt-3 mt-5 ">
-
-            <button type="submit" class="w-100 btn bg-gradient btn-primary btn-lg mt-3 fw-bold" 
-              style="background-color: #911b36;" aria-label="Salvar alterações do perfil">
-              Salvar Alterações
-            </button>
-          </div>
-        </form>
       </div>
-    </div>
+
+    </form>
   </div>
 </section>
 
+<script src="{% static 'js/perfil/script.js' %}"></script>
 {% endblock %}
