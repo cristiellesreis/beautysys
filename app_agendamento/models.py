@@ -26,7 +26,7 @@ class Agendamento(models.Model):
     servico = models.CharField(max_length=100)
     observacoes = models.TextField(blank=True, null=True)
     STATUS_CHOICES = [
-        ('agendado', 'Agendado'),
+        ('agendado', 'Pendente'),
         ('cancelado', 'Cancelado'),
         ('concluido', 'Concluído'),
     ]

@@ -2,56 +2,64 @@
 {% block conteudo %}
 {% load shared_tags %}
 
-<section class="p-3 m-3">
+<section class="p-3 m-3" role="region" aria-labelledby="titulo-estoque">
 
   {% nav_menu "Estoque de Produtos=estoque" %}
 
   <div class="content mb-5">
       <div class="container p-0 m-0">
-        <h1 tabindex="0" class="fw-normal text-body-emphasis">Controle de Estoque</h1>
+        <h1 id="titulo-estoque" tabindex="0" class="fw-normal text-body-emphasis">Controle de Estoque</h1>
         <p tabindex="0" class="text-muted">
           Gerencie os produtos em estoque, atualize as quantidades e cadastre novos itens conforme necessário.
-      </p>
+        </p>
       </div>
   </div>
-  
+
   {% show_messages %}
 
   <div class="container m-0 p-0">
       <div class="container-fluid w-100 d-flex justify-content-start mb-4 px-0">
-          <button class="btn btn-lg bg-gradient bg-dark fw-bold text-white d-flex align-items-center gap-2"
-                  type="button" data-bs-toggle="modal" data-bs-target="#example-modal-7">
-              <i class="fa-solid fa-circle-plus"></i>
-              <span>Novo Produto</span>
+          <button 
+              class="btn btn-lg bg-gradient bg-dark fw-bold text-white d-flex align-items-center gap-2"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#example-modal-7"
+              aria-label="Adicionar novo produto"
+              tabindex="0"
+          >
+              <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+              <span> Novo Produto</span>
           </button>
       </div>
-      
-      <div id="estoque" class="container m-0 p-0" style="max-width: 1000px;">
-  
+
+      <div id="estoque" class="container m-0 p-0" style="max-width: 1000px;" role="region" aria-labelledby="produtos-em-estoque">
+
         <div class="row mb-5 px-0">
             <div class="col-sm-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
-                <form method="get" action="{% url 'estoque' %}" class="d-flex flex-grow-1 gap-2">
+                <form method="get" action="{% url 'estoque' %}" class="d-flex flex-grow-1 gap-2" role="search" aria-label="Pesquisar produtos no estoque">
+                    <label for="criterio" class="visually-hidden">Pesquisar</label>
                     <input type="search"
-                            class="form-control form-control-lg border border-light flex-grow-1"
-                            name="criterio"
-                            value="{{ termo|default:'' }}"
-                            placeholder="Pesquisar produtos...">
-                    <button type="submit" class="btn btn-dark">
-                        <i class="fa-solid fa-search"></i>
+                           id="criterio"
+                           class="form-control form-control-lg border border-light flex-grow-1"
+                           name="criterio"
+                           value="{{ termo|default:'' }}"
+                           placeholder="Pesquisar produtos..."
+                           aria-label="Pesquisar produtos">
+                    <button type="submit" class="btn btn-dark" aria-label="Buscar" tabindex="0">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
                     </button>
                 </form>
             </div>
         </div>
-      
-        <div class="card shadow mt-4"> 
 
+        <div class="card shadow mt-4">
           <div class="card-header text-white" style="background-color: #780124;">
-            <h5 class="card-title mb-0">Produtos em estoque</h5>
+            <h2 id="produtos-em-estoque" class="h5 card-title mb-0" tabindex="0">Produtos em estoque</h2>
           </div>
 
           <div class="card-body">
             {% if itens_estoque %}
-            <div class="table-responsive">
+            <div class="table-responsive" role="table" aria-label="Tabela de produtos em estoque">
               <table class="table table-striped table-hover border-light text-dark">
                   <thead class="table-dark">
                       <tr>
@@ -64,112 +72,86 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for item in itens_estoque%}
+                    {% for item in itens_estoque %}
                       <tr>
-                        <td data-label="Item">{{item.item}}</td>
-                        <td data-label="Entrada" class="text-nowrap w-auto">{{item.entrada_no_estoque|date:"d/m/Y"}}</td>
-                        <td data-label="Quantidade" class="text-nowrap w-auto">{{item.quantidade}}</td>
-                        <td data-label="Quantidade" class="text-nowrap w-auto">{{item.preco}}</td>
+                        <td data-label="Item" tabindex="0">{{ item.item }}</td>
+                        <td data-label="Entrada" tabindex="0">{{ item.entrada_no_estoque|date:"d/m/Y" }}</td>
+                        <td data-label="Quantidade" tabindex="0">{{ item.quantidade }}</td>
+                        <td data-label="Preço Un." tabindex="0">{{ item.preco }}</td>
 
-                        <td data-label="Editar" class="text-center w-auto">
+                        <td data-label="Editar" class="text-center">
                           <button
-                            class="btn btn-sm" 
-                            data-bs-toggle="modal" 
+                            class="btn btn-sm"
+                            data-bs-toggle="modal"
                             data-bs-target="#modalEditar{{ item.pk }}"
                             data-id="{{ item.pk }}"
                             data-nome="{{ item.item }}"
-                            >
-                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                            aria-label="Editar {{ item.item }}"
+                            tabindex="0"
+                          >
+                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;" aria-hidden="true"></i>
                           </button>
                         </td>
-                          
-                        <td data-label="Excluir" class="text-end w-auto">
-                            <button 
-                            class="btn btn-sm btn-excluir" 
-                            data-bs-toggle="modal" 
+
+                        <td data-label="Excluir" class="text-end">
+                          <button
+                            class="btn btn-sm btn-excluir"
+                            data-bs-toggle="modal"
                             data-bs-target="#modalExcluir{{ item.pk }}"
                             data-id="{{ item.pk }}"
-                            data-nome="{{ item.item }}">
-                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                            data-nome="{{ item.item }}"
+                            aria-label="Excluir {{ item.item }}"
+                            tabindex="0"
+                          >
+                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;" aria-hidden="true"></i>
                           </button>
                         </td>
-
                       </tr>
 
-                      <div class="modal fade" id="modalExcluir{{ item.pk }}" tabindex="-1" aria-labelledby="modalExcluirLabel{{ item.pk }}" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <form method="POST" action="{% url 'remove_item_estoque' item.pk %}">
-                                {% csrf_token %}
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="modalExcluirLabel{{ item.pk }}">Excluir {{ item.item }}</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <label for="quantidade{{ item.pk }}">Quantas unidades deseja excluir?</label>
-                                  <input 
-                                    type="number" 
-                                    name="quantidade" 
-                                    id="quantidade{{ item.pk }}" 
-                                    min="1" 
-                                    max="{{ item.quantidade }}" 
-                                    class="form-control" 
-                                    required
-                                  >
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                  <button type="submit" class="btn btn-danger">Excluir</button>
-                                </div>
-                              </form>
-                            </div>
+                      <!-- Modal Excluir -->
+                      <div class="modal fade" id="modalExcluir{{ item.pk }}" tabindex="-1" aria-labelledby="modalExcluirLabel{{ item.pk }}" aria-hidden="true" role="dialog">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form method="POST" action="{% url 'remove_item_estoque' item.pk %}">
+                              {% csrf_token %}
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalExcluirLabel{{ item.pk }}" tabindex="0">Excluir {{ item.item }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                              </div>
+                              <div class="modal-body">
+                                <label for="quantidade{{ item.pk }}">Quantas unidades deseja excluir?</label>
+                                <input type="number" name="quantidade" id="quantidade{{ item.pk }}" min="1" max="{{ item.quantidade }}" class="form-control" required>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                              </div>
+                            </form>
                           </div>
+                        </div>
                       </div>
-                            
-                      <div class="modal fade" id="modalEditar{{ item.pk }}" tabindex="-1" aria-labelledby="modalEditarLabel{{ item.pk }}" aria-hidden="true">
+
+                      <div class="modal fade" id="modalEditar{{ item.pk }}" tabindex="-1" aria-labelledby="modalEditarLabel{{ item.pk }}" aria-hidden="true" role="dialog">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <form method="POST" action="{% url 'altera_item_estoque' item.pk %}">
                               {% csrf_token %}
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarLabel{{ item.pk }}">Editar {{ item.item }}</h5>
+                                <h5 class="modal-title" id="modalEditarLabel{{ item.pk }}" tabindex="0">Editar {{ item.item }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                               </div>
                               <div class="modal-body">
                                 <div class="mb-3">
                                   <label for="itemNome{{ item.pk }}" class="form-label">Nome do item</label>
-                                  <input 
-                                    type="text" 
-                                    name="item" 
-                                    id="itemNome{{ item.pk }}" 
-                                    class="form-control" 
-                                    value="{{ item.item }}" 
-                                    required
-                                  >
+                                  <input type="text" name="item" id="itemNome{{ item.pk }}" class="form-control" value="{{ item.item }}" required>
                                 </div>
                                 <div class="mb-3">
                                   <label for="itemQuantidade{{ item.pk }}" class="form-label">Quantidade</label>
-                                  <input 
-                                    type="number" 
-                                    name="quantidade" 
-                                    id="itemQuantidade{{ item.pk }}" 
-                                    class="form-control" 
-                                    value="{{ item.quantidade }}" 
-                                    min="0" 
-                                    required
-                                  >
+                                  <input type="number" name="quantidade" id="itemQuantidade{{ item.pk }}" class="form-control" value="{{ item.quantidade }}" min="0" required>
                                 </div>
                                 <div class="mb-3">
                                   <label for="itemPreco{{ item.pk }}" class="form-label">Preço</label>
-                                  <input 
-                                    type="number" 
-                                    step="0.01" 
-                                    name="preco" 
-                                    id="itemPreco{{ item.pk }}" 
-                                    class="form-control" 
-                                    value="{{ item.preco }}" 
-                                    required
-                                  >
+                                  <input type="number" step="0.01" name="preco" id="itemPreco{{ item.pk }}" class="form-control" value="{{ item.preco }}" required>
                                 </div>
                               </div>
                               <div class="modal-footer">
@@ -177,46 +159,39 @@
                                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
                               </div>
                             </form>
-                            
                           </div>
                         </div>
                       </div>
-
-                    {% endfor %}     
+                    {% endfor %}
                   </tbody>
               </table>
             </div>
+            {% else %}
+              <p tabindex="0">Insira um item no estoque</p>
+            {% endif %}
           </div>
-    
-          {% else %}
-              <p>Insira um item no estoque</p>
-          {% endif %}
-    
         </div>
-      </div>
-      
-      <div class="modal fade" id="example-modal-7" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modal-title-7">
-              Cadastro de Produtos
-              </h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="{% url 'adicionar_item_estoque' %}" method="post">
-              {% csrf_token %}
-  
-              {{ form.as_p }}
-              <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white w-100" style="background-color: #780124;">Salvar</button>
-              </form>
-            </div>
-            </div>
+
+        <!-- Modal Novo Produto -->
+        <div class="modal fade" id="example-modal-7" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true" role="dialog">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modal-title-7" tabindex="0">Cadastro de Produtos</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{% url 'adicionar_item_estoque' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white w-100" style="background-color: #780124;">Salvar</button>
+                  </form>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
   </div>
-
 </section>
 
 {% endblock %}

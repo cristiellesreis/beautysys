@@ -12,8 +12,25 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def financas(request):
-    return render(request, 'financas/financas.html')
+    hoje = now()
+    mes_atual = hoje.month
+    ano_atual = hoje.year
 
+    total_receita_mes = Receita.objects.filter(
+        data__year=ano_atual, data__month=mes_atual
+    ).aggregate(total=Sum('valor'))['total'] or 0
+
+    total_despesa_mes = Despesa.objects.filter(
+        data__year=ano_atual, data__month=mes_atual
+    ).aggregate(total=Sum('valor'))['total'] or 0
+
+    margem_lucro = total_receita_mes - total_despesa_mes
+
+    return render(request, 'financas/financas.html', {
+        'total_receita_mes': total_receita_mes,
+        'total_despesa_mes': total_despesa_mes,
+        'margem_lucro': margem_lucro,
+    })
 
 def cadastrar_receita(request):
     if request.method == 'POST':
@@ -56,10 +73,12 @@ def obter_receita(request, id_receita):
     dados = {
         'id': receita.id,
         'descricao': receita.descricao,
+        'categoria': receita.categoria,  # <- adicionado aqui
         'valor': str(receita.valor),
         'data': receita.data.strftime('%Y-%m-%d'),
     }
     return JsonResponse(dados)
+
 
 
 def editar_receita(request, id_receita):
@@ -119,11 +138,11 @@ def obter_despesa(request, id_despesa):
     dados = {
         'id': despesa.id,
         'descricao': despesa.descricao,
+        'categoria': despesa.categoria,
         'valor': str(despesa.valor),
         'data': despesa.data.strftime('%Y-%m-%d'),
     }
     return JsonResponse(dados)
-
 
 def editar_despesa(request, id_despesa):
     despesa = get_object_or_404(Despesa, id=id_despesa)

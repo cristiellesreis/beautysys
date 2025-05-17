@@ -7,16 +7,27 @@ from django.contrib.auth.decorators import login_required
 
 from app_agendamento.forms import ClienteForm, AgendamentoForm
 from app_agendamento.models import Cliente, Agendamento
+from django.utils import timezone
+
 
 @login_required
 def agendamento(request):
     agendamentos = Agendamento.objects.all().order_by('-data_hora_inicio')
     todos_clientes = Cliente.objects.all().order_by('nome')
+
+    hoje = timezone.localtime().date()
+    total_hoje = Agendamento.objects.filter(data_hora_inicio__date=hoje).count()
+
+    ontem = hoje - timezone.timedelta(days=1)
+    total_ontem = Agendamento.objects.filter(data_hora_inicio__date=ontem).count()
+    diferenca = total_hoje - total_ontem
+
     return render(request, 'agenda/agenda.html', {
         'agendamentos': agendamentos,
-        'todos_clientes': todos_clientes
+        'todos_clientes': todos_clientes,
+        'total_hoje': total_hoje,
+        'diferenca': diferenca
     })
-
 
 def cadastrar_agendamento(request):
     if request.method == 'POST':

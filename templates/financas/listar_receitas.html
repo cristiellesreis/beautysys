@@ -9,8 +9,8 @@
 
     <div class="content mb-5">
         <div class="container p-0 m-0">
-            <h1 tabindex="0" class="fw-normal text-body-emphasis" tabindex="0">Cadastrar Receita</h1>
-            <p tabindex="0" class="text-muted" tabindex="0">
+            <h1 tabindex="0" class="fw-normal text-body-emphasis">Cadastrar Receita</h1>
+            <p tabindex="0" class="text-muted">
                 Insira os detalhes da receita para registrar no sistema e manter o controle financeiro atualizado.
             </p>
         </div>
@@ -51,14 +51,15 @@
     
             <div class="card shadow mt-4">
                 <div class="card-header text-white" style="background-color: #780124;">
-                    <h5 class="card-title mb-0" tabindex="0">Lista de Receitas</h5>
+                    <h2 class="h5 card-title mb-0" tabindex="0">Lista de Receitas</h2>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover border-light text-dark">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col" class="w-50" tabindex="0">Descrição</th>
+                                    <th scope="col" class="w-40" tabindex="0">Descrição</th>
+                                    <th scope="col" class="text-nowrap w-auto" tabindex="0">Categoria</th>
                                     <th scope="col" class="text-nowrap w-auto" tabindex="0">Data</th>
                                     <th scope="col" class="text-nowrap w-auto" tabindex="0">Valor</th>
                                     <th scope="col" class="text-center w-auto" tabindex="0">Editar</th>
@@ -69,6 +70,7 @@
                                 {% for receita in receitas %}
                                 <tr>
                                     <td tabindex="0">{{ receita.descricao }}</td>
+                                    <td tabindex="0" class="text-nowrap w-auto text-capitalize">{{ receita.categoria }}</td>
                                     <td tabindex="0" class="text-nowrap w-auto">{{ receita.data }}</td>
                                     <td tabindex="0" class="text-nowrap w-auto">R$ {{ receita.valor|floatformat:2 }}</td>
                                     <td tabindex="0" class="text-center w-auto">
@@ -92,7 +94,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="5" tabindex="0">Nenhuma receita encontrada.</td>
+                                    <td colspan="6" tabindex="0">Nenhuma receita encontrada.</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -101,43 +103,55 @@
                 </div>
             </div>
         </div>
-    
+        
         <div class="modal fade" id="modal-nova-receita" tabindex="-1"
-             aria-labelledby="modal-title-receita" aria-modal="true"
-             aria-hidden="true" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modal-title-receita" tabindex="0">Cadastro de Receita</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar modal" tabindex="0"></button>
-                    </div>
-                    <form action="{% url 'cadastrar_receita' %}" method="post" class="w-400 mw-full">
-                        {% csrf_token %}
-                        <input type="hidden" id="id_receita" name="id_receita">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="id_descricao" class="pb-2">Descrição</label>
-                                <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao" value="{{ form.descricao.value }}" required tabindex="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="id_valor" class="pb-2">Valor</label>
-                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor" value="{{ form.valor.value }}" required tabindex="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="id_data" class="pb-2">Data</label>
-                                <input type="date" class="form-control mb-2 form-control-lg" id="id_data" name="data" value="{{ form.data.value }}" required tabindex="0">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn bg-gradient btn-lg w-100 shadow-sm fw-bold text-white" style="background-color: #780124;" tabindex="0">Salvar</button>
-                        </div>
-                    </form>
+        aria-labelledby="modal-title-receita" aria-modal="true"
+        aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-title-receita" tabindex="0">Cadastro de Receita</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar modal" tabindex="0"></button>
                 </div>
+                <form action="{% url 'cadastrar_receita' %}" method="post" class="w-400 mw-full">
+                    {% csrf_token %}
+                    <input type="hidden" id="id_receita" name="id_receita">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="id_descricao" class="pb-2">Descrição</label>
+                            <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao" value="{{ form.descricao.value }}" required tabindex="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_valor" class="pb-2">Valor</label>
+                            <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor" value="{{ form.valor.value }}" required tabindex="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_categoria" class="pb-2">Categoria</label>
+                            <select id="id_categoria" name="categoria" class="form-control mb-2 form-control-lg" required tabindex="0">
+                                <option value="" disabled selected>Selecione a categoria</option>
+                                <option value="cortes" {% if form.categoria.value == "cortes" %}selected{% endif %}>Cortes</option>
+                                <option value="tratamento" {% if form.categoria.value == "tratamento" %}selected{% endif %}>Tratamento</option>
+                                <option value="finalizacao" {% if form.categoria.value == "finalizacao" %}selected{% endif %}>Finalização</option>
+                                <option value="quimica" {% if form.categoria.value == "quimica" %}selected{% endif %}>Química</option>
+                                <option value="outros" {% if form.categoria.value == "outros" %}selected{% endif %}>Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_data" class="pb-2">Data</label>
+                            <input type="date" class="form-control mb-2 form-control-lg" id="id_data" name="data" value="{{ form.data.value }}" required tabindex="0">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn bg-gradient btn-lg w-100 shadow-sm fw-bold text-white" style="background-color: #780124;" tabindex="0">Salvar</button>
+                    </div>
+                </form>
             </div>
         </div>
 
         <script src="{% static 'js/financas/script.js' %}"></script>
     </div>
     
+
 </section>
+
 {% endblock %}

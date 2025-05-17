@@ -49,7 +49,7 @@
 
             <div class="card shadow mt-4" role="region" aria-labelledby="titulo-lista-despesas">
                 <div class="card-header text-white" style="background-color: #780124;">
-                    <h5 class="card-title mb-0" tabindex="0" id="titulo-lista-despesas">Lista de Despesas</h5>
+                    <h2 class="h5 card-title mb-0" tabindex="0" id="titulo-lista-despesas">Lista de Despesas</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -57,6 +57,7 @@
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" tabindex="0">Descrição</th>
+                                    <th scope="col" tabindex="0">Categoria</th>
                                     <th scope="col" tabindex="0">Data</th>
                                     <th scope="col" tabindex="0">Valor</th>
                                     <th scope="col" tabindex="0" class="text-center">Editar</th>
@@ -67,6 +68,7 @@
                                 {% for despesa in despesas %}
                                 <tr>
                                     <td tabindex="0">{{ despesa.descricao }}</td>
+                                    <td tabindex="0">{{ despesa.categoria|title }}</td>
                                     <td tabindex="0" class="text-nowrap">{{ despesa.data }}</td>
                                     <td tabindex="0" class="text-nowrap">R$ {{ despesa.valor }}</td>
                                     <td class="text-center">
@@ -74,7 +76,6 @@
                                                 onclick="carregarDadosDespesa('{{ despesa.id }}')"
                                                 data-bs-toggle="modal" data-bs-target="#modal-nova-despesa"
                                                 aria-label="Editar despesa {{ despesa.descricao }}">
-                                                
                                             <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;" aria-hidden="true"></i>
                                         </button>
                                     </td>
@@ -88,11 +89,10 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="5" tabindex="0">Nenhuma despesa encontrada.</td>
+                                    <td colspan="6" tabindex="0">Nenhuma despesa encontrada.</td>
                                 </tr>
                                 {% endfor %}
-                            </tbody>
-                        </table>
+                            </tbody>                        </table>
                     </div>
                 </div>
             </div>
@@ -113,6 +113,16 @@
                                 <label for="id_descricao" class="pb-2">Descrição</label>
                                 <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao"
                                        value="{{ form.descricao.value }}" required tabindex="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_categoria" class="pb-2">Categoria</label>
+                                <select id="id_categoria" name="categoria" class="form-control mb-2 form-control-lg" required tabindex="0">
+                                    <option value="" disabled selected>Selecione a categoria</option>
+                                    <option value="custos fixos" {% if form.categoria.value == "custos fixos" %}selected{% endif %}>Custos Fixos</option>
+                                    <option value="produtos" {% if form.categoria.value == "produtos" %}selected{% endif %}>Produtos</option>
+                                    <option value="salario" {% if form.categoria.value == "salario" %}selected{% endif %}>Salário</option>
+                                    <option value="outros" {% if form.categoria.value == "outros" %}selected{% endif %}>Outros</option>
+                                </select>
                             </div>
 
                             <div class="form-group">

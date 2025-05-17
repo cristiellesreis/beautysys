@@ -31,7 +31,7 @@
         
             <div class="card shadow mt-4" tabindex="0" aria-labelledby="titulo-agendamentos-lista">
                 <div class="card-header text-white" style="background-color: #780124;">
-                    <h5 class="card-title mb-0" id="titulo-agendamentos-lista">Agendamentos</h5>
+                    <h2 class="card-title h5 mb-0" id="titulo-agendamentos-lista">Agendamentos</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -126,14 +126,20 @@
         
                             <div class="form-group">
                                 <label for="id_servico" class="pb-2" tabindex="0">Serviço</label>
-                                <input type="text" class="form-control mb-2 form-control-lg" id="id_servico" name="servico"
-                                    value="{{ form.servico.value|default:'' }}" required tabindex="0">
+                                <select class="form-select form-control-lg mb-2" id="id_servico" name="servico" required tabindex="0">
+                                    <option disabled selected value="">Selecione uma categoria de serviço</option>
+                                    <option value="Cortes">Cortes</option>
+                                    <option value="Finalização">Finalização</option>
+                                    <option value="Química">Química</option>
+                                    <option value="Tratamento">Tratamento</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
                             </div>
         
                             <div class="form-group">
                                 <label for="id_status" class="pb-2" tabindex="0">Status</label>
                                 <select class="form-control mb-2 form-control-lg" id="id_status" name="status" tabindex="0">
-                                    <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Agendado</option>
+                                    <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Pendente</option>
                                     <option value="concluido" {% if form.status.value == 'concluido' %}selected{% endif %}>Concluído</option>
                                     <option value="cancelado" {% if form.status.value == 'cancelado' %}selected{% endif %}>Cancelado</option>
                                 </select>
