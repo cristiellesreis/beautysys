@@ -1,58 +1,87 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Item_Estoque
-from .services import EstoqueService
-from .forms import ItemEstoqueForm
-from .exceptions import QuantidadeInsuficiente
-from django.http import JsonResponse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+
+from app_perfil.models import Perfil
+from .forms import ItemEstoqueForm
+from .models import ItemEstoque
+
 
 @login_required
 def estoque(request):
-    lista_estoque = {}
-    form = ItemEstoqueForm()
-    try:
-        lista_estoque = EstoqueService.obter_itens_estoque()
-        return render(request, 'estoque/estoque.html', {'itens_estoque' : lista_estoque,'form': form})
-    except Item_Estoque.DoesNotExist:
-        return render(request, 'estoque/estoque.html')
-    
-    
-def adicionar_item_estoque(request):
+    perfil = get_object_or_404(Perfil, user=request.user)
+    termo = request.GET.get('criterio', '')
+
+    if termo:
+        itens = ItemEstoque.objects.filter(perfil=perfil, nome__icontains=termo).order_by('nome')
+    else:
+        itens = ItemEstoque.objects.filter(perfil=perfil).order_by('nome')
+
+    return render(request, 'estoque/estoque.html', {'itens': itens, 'termo': termo})
+
+
+@login_required
+def cadastrar_item_estoque(request):
+    perfil = get_object_or_404(Perfil, user=request.user)
     if request.method == 'POST':
         form = ItemEstoqueForm(request.POST)
         if form.is_valid():
-            EstoqueService.adicionar_item(
-                nome=form.cleaned_data['item'],
-                quantidade=form.cleaned_data['quantidade'],
-                custo_aquisicao=form.cleaned_data['custo_aquisicao'],
-                preco=form.cleaned_data['preco']
-            )
+            item = form.save(commit=False)
+            item.perfil = perfil
+            item.save()
+            messages.success(request, 'Item cadastrado com sucesso!')
             return redirect('estoque')
-        
+    else:
+        form = ItemEstoqueForm()
+    return render(request, 'estoque/estoque.html', {'form': form})
 
-    
-def remove_item_estoque(request,pk):
-    exception = {}
+
+@login_required
+def remover_item_estoque(request, id_item_estoque):
+    perfil = get_object_or_404(Perfil, user=request.user)
+    item = get_object_or_404(ItemEstoque, id=id_item_estoque, perfil=perfil)
+    item.delete()
+    query_params = request.GET.urlencode()
+    url = reverse('estoque')
+    if query_params:
+        url += f'?{query_params}'
+    messages.success(request, 'Item de estoque removido com sucesso!')
+    return redirect(url)
+
+
+@login_required
+def obter_item_estoque(request, id_item_estoque):
+    perfil = get_object_or_404(Perfil, user=request.user)
+    item = get_object_or_404(ItemEstoque, id=id_item_estoque, perfil=perfil)
+
+    dados_item = {
+        'id': item.id,
+        'nome': item.nome,
+        'quantidade': item.quantidade,
+        'preco_aquisicao': float(item.preco_aquisicao),
+        'preco_venda': float(item.preco_venda),
+        'data_validade': item.data_validade.strftime('%Y-%m-%d') if item.data_validade else '',
+    }
+
+    return JsonResponse(dados_item)
+
+
+@login_required
+def editar_item_estoque(request, id_item_estoque):
+    perfil = get_object_or_404(Perfil, user=request.user)
+    item = get_object_or_404(ItemEstoque, id=id_item_estoque, perfil=perfil)
+
     if request.method == 'POST':
-        try:
-            quantidade = int(request.POST.get('quantidade'),0)
-            EstoqueService.remover_item(request, pk, quantidade)
-        except QuantidadeInsuficiente as e:
-            return JsonResponse({'erro': str(e)}, status=400)
-        
-        return redirect('estoque')
-    
+        form = ItemEstoqueForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            query_params = request.GET.urlencode()
+            url = reverse('estoque')
+            if query_params:
+                url += f'?{query_params}'
+            messages.success(request, 'Item de estoque alterado com sucesso!')
+            return redirect(url)
+
     return redirect('estoque')
-
-
-
-
-def altera_item_estoque(request, pk):
-    item = get_object_or_404(Item_Estoque, pk=pk)
-
-    if request.method == 'POST':
-        sucesso, resultado = EstoqueService.editar_item(pk, request.POST)
-        if sucesso:
-            return redirect('estoque')
-        else:
-            return render(request, 'estoque/editar_item.html', {'form': resultado, 'item': item})

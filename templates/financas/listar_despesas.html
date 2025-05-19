@@ -114,6 +114,13 @@
                                 <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao"
                                        value="{{ form.descricao.value }}" required tabindex="0">
                             </div>
+
+                            <div class="form-group">
+                                <label for="id_valor" class="pb-2">Valor</label>
+                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor"
+                                       value="{{ form.valor.value }}" required tabindex="0">
+                            </div>
+
                             <div class="form-group">
                                 <label for="id_categoria" class="pb-2">Categoria</label>
                                 <select id="id_categoria" name="categoria" class="form-control mb-2 form-control-lg" required tabindex="0">
@@ -123,12 +130,6 @@
                                     <option value="salario" {% if form.categoria.value == "salario" %}selected{% endif %}>Salário</option>
                                     <option value="outros" {% if form.categoria.value == "outros" %}selected{% endif %}>Outros</option>
                                 </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="id_valor" class="pb-2">Valor</label>
-                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor"
-                                       value="{{ form.valor.value }}" required tabindex="0">
                             </div>
 
                             <div class="form-group">

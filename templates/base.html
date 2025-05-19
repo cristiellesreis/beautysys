@@ -21,9 +21,11 @@
     </div>
   
     <div class="offcanvas-body d-flex flex-column align-items-center">
-      
+
       <div class="mb-4">
-        <img src="/static/img/logo.svg" alt="Logotipo do sistema" style="height: 40px; width: auto;">
+        <a href="{% url 'home' %}">
+          <img src="/static/img/logo.svg" alt="Logotipo do sistema" style="height: 40px; width: auto;">
+        </a>
       </div>
   
       <div class="text-center p-3 mb-4">
@@ -33,7 +35,7 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" alt="Foto do usuário" class="rounded-circle d-block mx-auto" width="150" height="150">
         {% endif %}
 
-        <p class="fs-5 mt-2">{{perfil.nome_salao}}</p>
+        <p class="fs-5 fw-bold mt-2">{{perfil.nome_salao}}</p>
         <button id="darkModeToggle" aria-label="modo escuro" class="btn btn-secondary mt-2">
           <i class="fa fa-moon"></i>
         </button>
