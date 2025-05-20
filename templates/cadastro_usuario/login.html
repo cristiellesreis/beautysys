@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+{% load shared_tags %}
+
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeautySys - Login</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icone-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/b144170c7e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/css/landing_page/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/halfmoon.min.css" rel="stylesheet" integrity="sha256-RjeFzczeuZHCyS+Gvz+kleETzBF/o84ZRHukze/yv6o=" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/cores/halfmoon.modern.css" rel="stylesheet" integrity="sha256-DD6elX+jPmbFYPsGvzodUv2+9FHkxHlVtQi0/RJVULs=" crossorigin="anonymous">
+</head>
+
+<body>
+  <section>
+    <div class="container d-flex flex-column justify-content-center align-items-center vh-100 px-3" role="main">
+      <div class="mb-4 text-center">
+        <img src="/static/img/logo.svg" alt="Logotipo do sistema BeautySys" width="300">
+      </div>
+
+      <div class="w-100 p-4" style="max-width: 700px;">
+
+        {% show_messages %}
+
+        <form method="POST" action="{% url 'login' %}" role="form" aria-label="Formulário de login">
+          {% csrf_token %}
+          
+          <fieldset>
+            <legend class="sr-only">Digite suas credenciais para fazer login</legend>
+
+            <div class="form-group mb-4">
+              <label for="email">E-mail</label>
+              <input id="email" class="form-control form-control-lg shadow-sm" type="email" name="email" placeholder="Digite seu e-mail" required autocomplete="email" autofocus>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="senha">Senha</label>
+              <input id="senha" class="form-control form-control-lg shadow-sm" type="password" name="senha" placeholder="Digite sua senha" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="w-100 btn btn-primary btn-lg mt-3" style="background-color: #780124;">
+              Entrar
+            </button>
+
+            <p class="text-center mt-4">
+              Não possui cadastro?
+              <a href="{% url 'cadastro' %}">Cadastre-se</a>
+            </p>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

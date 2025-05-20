@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+{% load static %}
+
+<section class="p-3 m-3" aria-labelledby="dashboard-titulo">
+  <div class="container-fluid m-0 p-0">
+    <div class="content mb-5">
+      <div class="container-fluid p-0 m-0">
+        <h1 tabindex="0" id="dashboard-titulo" class="fw-light text-start">Bem-vindo {{perfil.nome_salao}}</h1>
+        <p tabindex="0" class="text-muted text-start" id="dashboard-descricao">Aqui está um resumo do dia!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid m-0 p-0" style="max-width: 1000px;">
+    <div class="row g-3 mb-4">
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100" aria-labelledby="total-clientes-titulo" tabindex="0">
+          <div class="card-body d-flex align-items-center gap-3">
+            <i class="fa-solid fa-users fa-2x" style="color: #780124;" aria-hidden="true"></i>
+            <div>
+              <h2 class="h6 fw-semibold mb-1" id="total-clientes-titulo">Total de Clientes</h2>
+              <p class="fs-5 fw-bold mb-1">{{ total_clientes }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100" aria-labelledby="atendimentos-hoje-titulo" tabindex="0">
+          <div class="card-body d-flex align-items-center gap-3">
+            <i class="fa-solid fa-calendar-check fa-2x" aria-hidden="true" style="color: #780124;"></i>
+            <div>
+              <h2 class="h6 fw-semibold mb-1" id="atendimentos-hoje-titulo">Atendimentos de hoje</h2>
+              <p class="fs-5 fw-bold mb-1">{{ total_hoje }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100" aria-labelledby="faturamento-titulo" tabindex="0">
+          <div class="card-body d-flex align-items-center gap-3">
+            <i class="fa-solid fa-money-bill-wave fa-2x" style="color: #780124;" aria-hidden="true"></i>
+            <div>
+              <h2 class="h6 fw-semibold mb-1" id="faturamento-titulo">Margem de Lucro</h2>
+              <p class="fs-5 fw-bold mb-1">R$ {{ margem_lucro|floatformat:2 }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card shadow-sm h-100" aria-labelledby="estoque-titulo" tabindex="0">
+          <div class="card-body d-flex align-items-center gap-3">
+            <i class="fa-solid fa-boxes-stacked fa-2x" style="color: #780124;" aria-hidden="true"></i>
+            <div>
+              <h2 class="h6 fw-semibold mb-1" id="estoque-titulo">Itens no estoque</h2>
+              <p class="fs-5 fw-bold mb-1">{{ total_estoque }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mt-4 p-0" aria-labelledby="agendamentos-recentes-titulo" tabindex="0">
+        <div class="card-header text-white" style="background-color: #780124;">
+          <h2 class="h5 mb-0" id="agendamentos-recentes-titulo">Agendamentos recentes</h2>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="table-responsive h-100">
+                <table class="table table-striped table-hover" aria-describedby="agendamentos-tabela">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Cliente</th>
+                      <th scope="col">Serviço</th>
+                      <th scope="col">Início</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for agendamento in agendamentos_semana %}
+                    <tr>
+                      <td>{{ agendamento.cliente.nome }}</td>
+                      <td>{{ agendamento.servico }}</td>
+                      <td>{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
+                      <td>
+                        {% if agendamento.status == 'agendado' %}
+                          <span class="badge bg-warning text-dark">{{ agendamento.get_status_display }}</span>
+                        {% elif agendamento.status == 'cancelado' %}
+                          <span class="badge bg-danger">{{ agendamento.get_status_display }}</span>
+                        {% elif agendamento.status == 'concluido' %}
+                          <span class="badge bg-success">{{ agendamento.get_status_display }}</span>
+                        {% else %}
+                          <span class="badge bg-secondary">Desconhecido</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="4" class="text-center">Nenhum agendamento para esta semana.</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+              <div class="w-100">
+                <h3 class="h6 mb-3 text-center">Status dos Agendamentos</h3>
+                <div id="graficoStatusAgendamentos" 
+                  data-concluido="{{ status_concluido }}"
+                  data-agendado="{{ status_agendado }}"
+                  data-cancelado="{{ status_cancelado }}" 
+                  style="width: 100%; height: 300px;" 
+                  role="img" aria-label="Gráfico de status dos agendamentos" tabindex="0">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container card shadow-sm mt-4 p-0" aria-labelledby="receitas-despesas-titulo" tabindex="0">
+        <div class="card-header text-white" style="background-color: #780124;">
+          <h2 class="h5 mb-0" id="receitas-despesas-titulo">Receitas e Despesas</h2>
+        </div>
+        <div class="card-body">
+          <div class="col-12">
+            <div class="w-100">
+              <h3 class="h6 mb-3 text-center">Receita e Despesas Mensais</h3>
+              <div id="graficoFinanceiro" style="width: 100%; height: 300px;" role="img" aria-label="Gráfico de receitas e despesas mensais" tabindex="0"></div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-12 col-md-6">
+              <h3 class="h6 mb-3 text-center">Receita por Categoria</h3>
+              
+              <div id="graficoReceitaPorCategoria" style="width: 100%; height: 300px;" role="img" aria-label="Gráfico de receita por categoria" tabindex="0"></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <h3 class="h6 mb-3 text-center">Despesas por Categoria</h3>
+              
+              <div id="graficoDespesasPorCategoria" style="width: 100%; height: 300px;" role="img" aria-label="Gráfico de despesas por categoria" tabindex="0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script id="dados-receita" type="application/json">
+    {{ dados_receita|safe }}
+  </script>
+
+  <script id="dados-despesa" type="application/json">
+    {{ dados_despesa|safe }}
+  </script>
+
+</section>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="{% static 'js/dashboard/script.js' %}"></script>
+
+{% endblock %}

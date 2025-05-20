@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+{% load static %}
+{% load shared_tags %}
+
+<section class="p-3 m-3" aria-labelledby="titulo-despesas">
+
+    {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
+
+    <div class="content mb-5">
+        <div class="container p-0 m-0">
+            <h1 tabindex="0" id="titulo-despesas" class="fw-normal text-body-emphasis" tabindex="0">Cadastrar Despesa</h1>
+            <p tabindex="0" class="text-muted" tabindex="0">
+                Registre suas despesas para manter o controle financeiro em dia. Insira as informações abaixo.
+            </p>
+        </div>
+    </div>
+
+    {% show_messages %}
+
+    <div class="container m-0 p-0 g-3 mb-4" role="region" aria-labelledby="area-listagem-despesas">
+        <div class="container-fluid w-100 d-flex justify-content-start mb-4 px-0">
+            <button tabindex="0" class="btn bg-gradient bg-dark fw-bold text-white btn-lg d-flex align-items-center gap-2"
+                    onclick="prepararNovoCadastroDespesa()" type="button" data-bs-toggle="modal" data-bs-target="#modal-nova-despesa"
+                    aria-label="Abrir formulário para nova despesa">
+                <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+                <span>Nova Despesa</span>
+            </button>
+        </div>
+
+        <div id="receitas" class="container m-0 p-0" style="max-width: 1000px;">
+            <div class="row mb-5 px-0">
+                <div class="col-sm-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
+                    <form method="get" action="{% url 'listar_despesas' %}" class="d-flex flex-grow-1 gap-2" role="search" aria-label="Formulário de busca de despesas">
+                        <label for="busca-despesas" class="visually-hidden">Buscar despesa</label>
+                        <input id="busca-despesas" type="search"
+                               class="form-control form-control-lg border border-light flex-grow-1"
+                               name="criterio"
+                               value="{{ termo|default:'' }}"
+                               placeholder="Pesquisar despesas..."
+                               aria-label="Pesquisar despesas"
+                               tabindex="0">
+                        <button type="submit" class="btn btn-dark" aria-label="Buscar" tabindex="0">
+                            <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow mt-4" role="region" aria-labelledby="titulo-lista-despesas">
+                <div class="card-header text-white" style="background-color: #780124;">
+                    <h2 class="h5 card-title mb-0" tabindex="0" id="titulo-lista-despesas">Lista de Despesas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover border-light text-dark" aria-describedby="titulo-lista-despesas">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" tabindex="0">Descrição</th>
+                                    <th scope="col" tabindex="0">Categoria</th>
+                                    <th scope="col" tabindex="0">Data</th>
+                                    <th scope="col" tabindex="0">Valor</th>
+                                    <th scope="col" tabindex="0" class="text-center">Editar</th>
+                                    <th scope="col" tabindex="0" class="text-end">Excluir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for despesa in despesas %}
+                                <tr>
+                                    <td tabindex="0">{{ despesa.descricao }}</td>
+                                    <td tabindex="0">{{ despesa.categoria|title }}</td>
+                                    <td tabindex="0" class="text-nowrap">{{ despesa.data }}</td>
+                                    <td tabindex="0" class="text-nowrap">R$ {{ despesa.valor }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm" tabindex="0"
+                                                onclick="carregarDadosDespesa('{{ despesa.id }}')"
+                                                data-bs-toggle="modal" data-bs-target="#modal-nova-despesa"
+                                                aria-label="Editar despesa {{ despesa.descricao }}">
+                                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm" tabindex="0"
+                                                onclick="abrirModalRemocao('{{ despesa.descricao }}', '{% url 'remover_despesa' despesa.id %}')"
+                                                aria-label="Excluir despesa {{ despesa.descricao }}">
+                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" tabindex="0">Nenhuma despesa encontrada.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-nova-despesa" tabindex="-1" aria-labelledby="modal-title-7" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modal-title-7" tabindex="0">Cadastro de Despesa</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar modal"></button>
+                    </div>
+                    <form action="{% url 'cadastrar_despesa' %}" method="post" class="w-400 mw-full" aria-describedby="modal-title-7">
+                        <input type="hidden" name="id_despesa" id="id_despesa">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id_descricao" class="pb-2">Descrição</label>
+                                <input type="text" class="form-control mb-2 form-control-lg" id="id_descricao" name="descricao"
+                                       value="{{ form.descricao.value }}" required tabindex="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_valor" class="pb-2">Valor</label>
+                                <input type="number" step="0.01" class="form-control mb-2 form-control-lg" id="id_valor" name="valor"
+                                       value="{{ form.valor.value }}" required tabindex="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_categoria" class="pb-2">Categoria</label>
+                                <select id="id_categoria" name="categoria" class="form-control mb-2 form-control-lg" required tabindex="0">
+                                    <option value="" disabled selected>Selecione a categoria</option>
+                                    <option value="custos fixos" {% if form.categoria.value == "custos fixos" %}selected{% endif %}>Custos Fixos</option>
+                                    <option value="produtos" {% if form.categoria.value == "produtos" %}selected{% endif %}>Produtos</option>
+                                    <option value="salario" {% if form.categoria.value == "salario" %}selected{% endif %}>Salário</option>
+                                    <option value="outros" {% if form.categoria.value == "outros" %}selected{% endif %}>Outros</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_data" class="pb-2">Data</label>
+                                <input type="date" class="form-control mb-2 form-control-lg" id="id_data" name="data"
+                                       value="{{ form.data.value }}" required tabindex="0">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white btn-block w-100"
+                                    style="background-color: #780124;" tabindex="0">
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="{% static 'js/financas/script.js' %}"></script>
+    </div>
+</section>
+{% endblock %}

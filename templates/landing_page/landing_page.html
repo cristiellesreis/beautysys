@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icone-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;400;700;900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/b144170c7e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/css/landing_page/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/halfmoon.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.2/css/cores/halfmoon.modern.css" rel="stylesheet">
+  <title>BeautySys</title>
+</head>
+
+<body role="document">
+  <header role="banner">
+    <nav aria-label="Menu de navegação principal">
+      <div class="nav-bar">
+        <div>
+          <img src="/static/img/logo.svg" alt="Logotipo BeautySys" width="180px">
+        </div>
+        <div class="mobile-menu-icon">
+          <button onclick="menuShow()" aria-label="Abrir menu de navegação">
+            <i class="fa-solid fa-bars fa-2xl icon"></i>
+          </button>
+        </div>
+        <div class="nav-list">
+          <ul>
+            <li class="nav-item"><a href="#inicio" class="nav-link" tabindex="0">Início</a></li>
+            <li class="nav-item"><a href="#sobrenos" class="nav-link" tabindex="0">Sobre</a></li>
+            <li class="nav-item"><a href="#depoimentos" class="nav-link" tabindex="0">Depoimentos</a></li>
+          </ul>
+        </div>
+        <div class="login-button">
+          <a href="{% url 'login' %}" class="botao-start" tabindex="0">Acessar</a>
+        </div>
+      </div>
+    </nav>
+    <div class="menu-mobile">
+      <ul>
+        <li class="nav-item"><a href="#inicio" class="nav-link" tabindex="0">Início</a></li>
+        <li class="nav-item"><a href="#sobrenos" class="nav-link" tabindex="0">Sobre</a></li>
+        <li class="nav-item"><a href="#depoimentos" class="nav-link" tabindex="0">Depoimentos</a></li>
+        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link" tabindex="0">Acessar</a></li>
+      </ul>
+    </div>
+    <div class="overlay"></div>
+  </header>
+
+  <main role="main">
+    <article>
+      <section id="inicio" aria-labelledby="titulo-inicio" class="conteudo-intro">
+        <div class="container-intro">
+          <h1 id="titulo-inicio">Transforme a gestão do seu salão de beleza com praticidade e eficiência</h1>
+          <p>Gerenciar um salão não precisa ser complicado. Com o BeautySys, você tem controle total da sua agenda, finanças, estoque e atendimento ao cliente em um só lugar – simples, intuitivo e feito especialmente para salões de beleza como o seu.</p>
+          <div class="botao-start-mobile">
+            <a href="{% url 'login' %}" class="botao-start" tabindex="0">Vamos Começar</a>
+          </div>
+        </div>
+        <img src="/static/img/landing_page/fotoSistema.png" alt="foto do sistema na versão mobile e desktop">
+      </section>
+
+      <section id="sobrenos" aria-labelledby="titulo-sobrenos" class="conteudo-info">
+        <div class="container-info">
+          <h2 id="titulo-sobrenos">O que torna nosso sistema diferente?</h2>
+          <p>Nosso sistema de gerenciamento oferece tudo o que o seu salão precisa, sem complicações. Foi desenvolvido sob medida para atender às necessidades de salões modernos, facilitando o dia a dia da sua equipe e melhorando a experiência dos seus clientes.</p>
+        </div>
+        <div class="container-topicos">
+          <div class="item-topico">
+            <div class="titulo-topico">
+              <div><i class="fa-solid fa-calendar-days fa-2xl" style="color: #780124;"></i></div>
+              <h3>Agendamentos organizados</h3>
+              <p>Registre horários de atendimento e evite confusões na agenda.</p>
+            </div>
+          </div>
+          <div class="item-topico">
+            <div class="titulo-topico">
+              <div><i class="fa-solid fa-chart-simple fa-2xl" style="color: #780124;"></i></div>
+              <h3>Controle Financeiro</h3>
+              <p>Registre entradas e saídas e visualize seus ganhos em gráficos.</p>
+            </div>
+          </div>
+          <div class="item-topico">
+            <div class="titulo-topico">
+              <div><i class="fa-solid fa-bell fa-2xl" style="color: #780124;"></i></div>
+              <h3>Lembretes Automáticos</h3>
+              <p>Envie avisos para clientes confirmarem os horários.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="depoimentos" aria-labelledby="titulo-depoimentos" class="comentarios">
+        <h2 id="titulo-depoimentos">Veja o que nossos clientes dizem</h2>
+        <div id="carousel-example-8" class="carousel slide w-100" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="card-user slide">
+                <img src="/static/img/landing_page/user1.png" alt="Foto de Rafaela Souza, cliente do BeautySys">
+                <h3>Rafaela Souza, cabeleireira e gestora do Estúdio RStyle</h3>
+                <p>"Tudo no mesmo lugar. Simples e eficiente. Controle de estoque, financeiro e agendamento com acesso pelo celular. É exatamente o que eu precisava."</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="card-user slide">
+                <img src="/static/img/landing_page/user2.png" alt="Foto de Camila Rocha, cliente do BeautySys">
+                <h3>Camila Rocha, proprietária do Salão Bella Arte</h3>
+                <p>"Meus clientes amam os lembretes automáticos! Além de evitar faltas, eles se sentem mais bem cuidados. O sistema me ajuda a manter a agenda sempre cheia."</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="card-user slide">
+                <img src="/static/img/landing_page/user3.png" alt="Foto de Juliana Silva, cliente do BeautySys">
+                <h3>Juliana Silva, proprietária do Salão Look Glam</h3>
+                <p>"Melhor investimento que fiz para o salão! Desde que começamos a usar o sistema, a organização e a eficiência aumentaram muito. As vendas também cresceram porque conseguimos analisar melhor os resultados."</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carousel-example-8" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carousel-example-8" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+          </button>
+        </div>
+        <div>
+          <a href="{% url 'login' %}" class="botao-start" tabindex="0">Vamos Começar</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer role="contentinfo">
+    <section>
+      <div class="rodape-banner">
+        <div>
+          <h2>Simplifique como sua equipe trabalha hoje.</h2>
+        </div>
+        <div>
+          <a href="{% url 'login' %}" class="botao-start-footer" tabindex="0">Acessar</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="rodape">
+        <div class="logo-icones">
+          <div><img src="/static/img/logo.svg" width="180px" alt="Logotipo BeautySys"></div>
+          <div class="icones-redes">
+            <a class="svg-img" href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+              <i class="fab fa-facebook fa-lg"></i>
+            </a>
+            <a class="svg-img" href="https://www.youtube.com" target="_blank" aria-label="YouTube">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <a class="svg-img" href="https://www.twitter.com" target="_blank" aria-label="Twitter">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a class="svg-img" href="https://www.pinterest.com" target="_blank" aria-label="Pinterest">
+              <i class="fab fa-pinterest fa-lg"></i>
+            </a>
+            <a class="svg-img" href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/landing_page/script.js"></script>
+</body>
+
+</html>
