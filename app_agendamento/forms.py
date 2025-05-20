@@ -11,7 +11,7 @@ class ClienteForm(forms.ModelForm):
 class AgendamentoForm(forms.ModelForm):
     class Meta:
         model = Agendamento
-        fields = ['cliente', 'data_hora_inicio', 'data_hora_fim', 'servico', 'observacoes', 'status']
+        fields = ['cliente', 'data_hora_inicio', 'data_hora_fim', 'servico', 'observacoes', 'status', 'lembrete_sms']
         widgets = {
             'data_hora_inicio': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'data_hora_fim': forms.DateTimeInput(attrs={'type': 'datetime-local'}),

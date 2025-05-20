@@ -1,4 +1,5 @@
 from django.db import models
+from app_perfil.models import Perfil
 
 
 class Cliente(models.Model):
@@ -6,6 +7,8 @@ class Cliente(models.Model):
     telefone = models.CharField(max_length=20)
     email = models.EmailField(blank=True, null=True)
     data_cadastro = models.DateTimeField(auto_now_add=True)
+    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='clientes')
+    
 
     objects: models.Manager["Cliente"]
 
@@ -36,3 +39,6 @@ class Agendamento(models.Model):
 
     def __str__(self):
         return f"{self.cliente.nome} - {self.data_hora_inicio.strftime('%d/%m/%Y %H:%M')}"
+    
+    
+    lembrete_sms = models.BooleanField(default=False)

@@ -142,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AWS_ACCESS_KEY_ID = 'COLOCAR_ID'
+AWS_SECRET_ACCESS_KEY = 'COLOCAR_KEY'
+AWS_REGION_NAME = 'sa-east-1'
