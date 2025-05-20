@@ -9,8 +9,8 @@
 
     <div class="content mb-5">
         <div class="container p-0 m-0">
-            <h1 class="fw-normal text-body-emphasis">Agendamentos</h1>
-            <p class="text-muted">
+            <h1 tabindex="0" class="fw-normal text-body-emphasis" id="titulo-agendamentos">Agendamentos</h1>
+            <p tabindex="0" class="text-muted" aria-labelledby="titulo-agendamentos">
                 Visualize e gerencie os agendamentos dos clientes. Acompanhe status, horários e mantenha tudo organizado.
             </p>
         </div>
@@ -22,67 +22,78 @@
         <div id="agendamentos" class="container m-0 p-0" style="max-width: 1000px;">
             <div class="container-fluid w-100 d-flex justify-content-start mb-5 px-0">
                 <button class="btn btn-lg bg-gradient bg-dark fw-bold text-white d-flex align-items-center gap-2"
-                        onclick="prepararNovoAgendamento()" type="button" data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
+                        onclick="prepararNovoAgendamento()" type="button" data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento"
+                        tabindex="0" aria-label="Adicionar novo agendamento">
                     <i class="fa-solid fa-circle-plus"></i>
                     <span>Novo Agendamento</span>
                 </button>
             </div>
         
-            <div class="card shadow mt-4">
-                <div class="card-header text-white" style="background-color: #911b36;">
-                    <h5 class="card-title mb-0">Agendamentos</h5>
+            <div class="card shadow mt-4" tabindex="0" aria-labelledby="titulo-agendamentos-lista">
+            <div class="card-header text-white" style="background-color: #780124;">
+                <h2 class="card-title h5 mb-0" id="titulo-agendamentos-lista">Agendamentos</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-striped table-hover border-light text-dark align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="w-20" tabindex="0">Cliente</th>
+                        <th scope="col" class="text-nowrap" tabindex="0">Data/Hora Início</th>
+                        <th scope="col" class="text-nowrap" tabindex="0">Data/Hora Fim</th>
+                        <th scope="col" class="w-20" tabindex="0">Serviço</th>
+                        <th scope="col" class="text-nowrap" tabindex="0">Status</th>
+                        <th scope="col" class="text-center text-nowrap" tabindex="0">Lembrete</th>
+                        <th scope="col" class="text-center text-nowrap" tabindex="0">Editar</th>
+                        <th scope="col" class="text-end text-nowrap" tabindex="0">Excluir</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for agendamento in agendamentos %}
+                    <tr>
+                        <td data-label="Cliente" tabindex="0">{{ agendamento.cliente.nome }}</td>
+                        <td data-label="Data/Hora Início" class="text-nowrap" tabindex="0">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
+                        <td data-label="Data/Hora Fim" class="text-nowrap" tabindex="0">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
+                        <td data-label="Serviço" tabindex="0">{{ agendamento.servico }}</td>
+                        <td data-label="Status" class="text-nowrap" tabindex="0">
+                        <span class="badge
+                            {% if agendamento.status == 'concluido' %}bg-success
+                            {% elif agendamento.status == 'cancelado' %}bg-danger
+                            {% else %}bg-warning text-dark{% endif %}">
+                            {{ agendamento.get_status_display }}
+                        </span>
+                        </td>
+                        <td data-label="Lembrete" class="text-center text-nowrap" tabindex="0">
+                        {% if agendamento.lembrete_sms %}
+                            <i class="fa-solid fa-check text-success" aria-label="Lembrete ativado"></i>
+                        {% else %}
+                            <i class="fa-solid fa-xmark text-muted" aria-label="Lembrete desativado"></i>
+                        {% endif %}
+                        </td>
+                        <td data-label="Editar" class="text-center text-nowrap">
+                        <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
+                                data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento"
+                                tabindex="0" aria-label="Editar agendamento">
+                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
+                        </button>
+                        </td>
+                        <td data-label="Excluir" class="text-end text-nowrap">
+                        <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
+                                data-toggle="modal" data-target="#modal-remocao"
+                                tabindex="0" aria-label="Excluir agendamento">
+                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center" tabindex="0">Nenhum agendamento encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover border-light text-dark">
-                            <thead  class="table-dark">
-                                <tr>
-                                    <th scope="col" class="w-20">Cliente</th>
-                                    <th scope="col" class="text-nowrap w-auto">Data/Hora Início</th>
-                                    <th scope="col" class="text-nowrap w-auto">Data/Hora Fim</th>
-                                    <th scope="col" class="w-20">Serviço</th>
-                                    <th scope="col" class="text-nowrap w-auto">Status</th>
-                                    <th scope="col" class="text-center w-auto">Editar</th>
-                                    <th scope="col" class="text-end w-auto">Excluir</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for agendamento in agendamentos %}
-                                <tr>
-                                    <td data-label="Cliente">{{ agendamento.cliente.nome }}</td>
-                                    <td data-label="Data/Hora Inicio" class="text-nowrap w-auto">{{ agendamento.data_hora_inicio|date:"d/m/Y H:i" }}</td>
-                                    <td data-label="Data/Hora Fim" class="text-nowrap w-auto">{{ agendamento.data_hora_fim|date:"d/m/Y H:i" }}</td>
-                                    <td data-label="Serviço">{{ agendamento.servico }}</td>
-                                    <td data-label="Status" class="text-nowrap w-auto">
-                                        <span class="badge
-                                            {% if agendamento.status == 'concluido' %}bg-success
-                                            {% elif agendamento.status == 'cancelado' %}bg-danger
-                                            {% else %}bg-info{% endif %}">
-                                            {{ agendamento.get_status_display }}
-                                        </span>
-                                    </td>
-                                    <td data-label="Editar" class="text-center w-auto">
-                                        <button class="btn btn-sm" onclick="carregarDadosAgendamento('{{ agendamento.id }}')"
-                                            data-bs-toggle="modal" data-bs-target="#modal-novo-agendamento">
-                                            <i class="fa-solid fa-pen fa-lg" style="color: #9dc284;"></i>
-                                        </button>
-                                    </td>
-                                    <td data-label="Excluir" class="text-end w-auto">
-                                        <button class="btn btn-sm" onclick="abrirModalRemocao('o agendamento', '{% url 'remover_agendamento' agendamento.id %}')"
-                                            data-toggle="modal" data-target="#modal-remocao">
-                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #f95b56;"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="7">Nenhum agendamento encontrado.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            </div>
             </div>
         </div>
         
@@ -90,17 +101,17 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modal-title-7">
+                        <h1 class="modal-title fs-5" id="modal-title-7" aria-live="polite">
                         </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" tabindex="0"></button>
                     </div>
                     <form action="#" method="post" class="w-400 mw-full">
                         <input type="hidden" id="id_agendamento" name="id_agendamento">
                         {% csrf_token %}
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="id_cliente" class="pb-2">Cliente</label>
-                                <select class="form-control mb-2 form-control-lg" id="id_cliente" name="cliente" required>
+                                <label for="id_cliente" class="pb-2" tabindex="0">Cliente</label>
+                                <select class="form-control mb-2 form-control-lg" id="id_cliente" name="cliente" required tabindex="0">
                                     {% for cliente in todos_clientes %}
                                     <option value="{{ cliente.id }}" {% if form.cliente.value == cliente.id %}selected{% endif %}>
                                         {{ cliente.nome }}
@@ -110,39 +121,56 @@
                             </div>
         
                             <div class="form-group">
-                                <label for="id_data_hora_inicio" class="pb-2">Data e Hora Inicio</label>
+                                <label for="id_data_hora_inicio" class="pb-2" tabindex="0">Data e Hora Inicio</label>
                                 <input type="datetime-local" class="form-control mb-2 form-control-lg" id="id_data_hora_inicio" name="data_hora_inicio"
-                                    value="{{ form.data_hora_inicio.value|default:'' }}" required>
+                                    value="{{ form.data_hora_inicio.value|default:'' }}" required tabindex="0">
                             </div>
         
                             <div class="form-group">
-                                <label for="id_data_hora_fim" class="pb-2">Data e Hora Fim</label>
+                                <label for="id_data_hora_fim" class="pb-2" tabindex="0">Data e Hora Fim</label>
                                 <input type="datetime-local" class="form-control mb-2 form-control-lg" id="id_data_hora_fim" name="data_hora_fim"
-                                    value="{{ form.data_hora_fim.value|default:'' }}" required>
+                                    value="{{ form.data_hora_fim.value|default:'' }}" required tabindex="0">
                             </div>
         
                             <div class="form-group">
-                                <label for="id_servico" class="pb-2">Serviço</label>
-                                <input type="text" class="form-control mb-2 form-control-lg" id="id_servico" name="servico"
-                                    value="{{ form.servico.value|default:'' }}" required>
-                            </div>
-        
-                            <div class="form-group">
-                                <label for="id_status" class="pb-2">Status</label>
-                                <select class="form-control mb-2 form-control-lg" id="id_status" name="status">
-                                    <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Agendado</option>
-                                    <option value="concluido" {% if form.status.value == 'concluido' %}selected{% endif %}>Concluído</option>
-                                    <option value="cancelado" {% if form.status.value == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                                <label for="id_servico" class="pb-2" tabindex="0">Serviço</label>
+                                <select class="form-select form-control-lg mb-2" id="id_servico" name="servico" required tabindex="0">
+                                    <option disabled selected value="">Selecione uma categoria de serviço</option>
+                                    <option value="Cortes">Cortes</option>
+                                    <option value="Finalização">Finalização</option>
+                                    <option value="Química">Química</option>
+                                    <option value="Tratamento">Tratamento</option>
+                                    <option value="Outros">Outros</option>
                                 </select>
                             </div>
         
                             <div class="form-group">
-                                <label for="id_observacoes" class="pb-2">Observações</label>
-                                <textarea class="form-control mb-2 form-control-lg" id="id_observacoes" name="observacoes">{{ form.observacoes.value|default:'' }}</textarea>
+                                <label for="id_status" class="pb-2" tabindex="0">Status</label>
+                                <select class="form-control mb-2 form-control-lg" id="id_status" name="status" tabindex="0">
+                                    <option value="agendado" {% if form.status.value == 'agendado' %}selected{% endif %}>Pendente</option>
+                                    <option value="concluido" {% if form.status.value == 'concluido' %}selected{% endif %}>Concluído</option>
+                                    <option value="cancelado" {% if form.status.value == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-check mb-3">
+                                <input type="checkbox"
+                                    class="form-check-input"
+                                    id="id_lembrete_sms"
+                                    name="lembrete_sms"
+                                    {% if form.lembrete_sms.value %}checked{% endif %}
+                                    tabindex="0">
+                                <label class="form-check-label" for="id_lembrete_sms" tabindex="0">
+                                    Enviar lembrete por SMS
+                                </label>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="id_observacoes" class="pb-2" tabindex="0">Observações</label>
+                                <textarea class="form-control mb-2 form-control-lg" id="id_observacoes" name="observacoes" tabindex="0">{{ form.observacoes.value|default:'' }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white btn-block w-100" style="background-color: #911b36;">Salvar</button>
+                            <button type="submit" class="btn btn-lg bg-gradient fw-bold text-white btn-block w-100" style="background-color: #780124;" tabindex="0">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -151,7 +179,6 @@
         
         <script src="{% static 'js/agenda/agenda.js' %}"></script>
     </div>
-
 </section>
 
 {% endblock %}

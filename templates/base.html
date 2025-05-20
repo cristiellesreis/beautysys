@@ -15,65 +15,74 @@
 <body class="ps-md-sbwidth">
 
   <nav class="sidebar offcanvas-start offcanvas-md bg-gradient bg-secondary-subtle border border-0" tabindex="-1" id="sidebar-example">
+    
     <div class="offcanvas-header d-flex justify-content-end">
       <button type="button" class="btn-close d-lg-none ms-1" data-bs-dismiss="offcanvas" data-bs-target="#sidebar-example" aria-label="Close"></button>
     </div>
-    <div class="d-flex justify-content-center">
-      <img src="/static/img/logo.svg" alt="logotipo" style="height: 40px; width: auto;">
-    </div>
+  
+    <div class="offcanvas-body d-flex flex-column align-items-center">
 
-    <div class="offcanvas-body">
-      <div class="text-center p-3 mb-4">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" 
-            alt="Usuário" class="rounded-circle d-block mx-auto" width="150" height="150">
-          <p class="fs-lg mt-2 fs-5">Nome do Salão</p>
-          <button id="darkModeToggle" class="btn btn-secondary">
-            <i class="fa fa-moon"></i>
-          </button>
+      <div class="mb-4">
+        <a href="{% url 'home' %}">
+          <img src="/static/img/logo.svg" alt="Logotipo do sistema" style="height: 40px; width: auto;">
+        </a>
       </div>
-      <ul class="nav nav-pills flex-column w-75 mx-auto">
-        <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}" aria-current="page"><i class="fa-solid fa-chart-line me-2"></i>Dashboard</a>
+  
+      <div class="text-center p-3 mb-4">
+        {% if perfil and perfil.imagem %}
+          <img src="{{ perfil.imagem.url }}" alt="Foto do usuário" class="rounded-circle d-block mx-auto" width="150" height="150">
+        {% else %}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png" alt="Foto do usuário" class="rounded-circle d-block mx-auto" width="150" height="150">
+        {% endif %}
+
+        <p class="fs-5 fw-bold mt-2">{{perfil.nome_salao}}</p>
+        <button id="darkModeToggle" aria-label="modo escuro" class="btn btn-secondary mt-2">
+          <i class="fa fa-moon"></i>
+        </button>
+      </div>
+  
+      <ul class="nav nav-pills flex-column w-75 mx-auto mb-4">
+        <li class="nav-item mb-3">
+          <a class="sidebar-link bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-100 py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'home' %}">
+            <i class="fa-solid fa-chart-line me-2"></i>Dashboard
+          </a>
         </li>
-        <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}" aria-current="page"><i class="fa-solid fa-user me-2"></i>Perfil</a>
+        <li class="nav-item mb-3">
+          <a class="sidebar-link bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-100 py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'perfil' %}">
+            <i class="fa-solid fa-user me-2"></i>Perfil
+          </a>
         </li>
-        <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}" aria-current="page"><i class="fa-solid fa-calendar-check me-2"></i>Agenda</a>
+        <li class="nav-item mb-3">
+          <a class="sidebar-link bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-100 py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'agendamento' %}">
+            <i class="fa-solid fa-calendar-check me-2"></i>Agenda
+          </a>
         </li>
-        <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}" aria-current="page"><i class="fa-solid fa-wallet me-2"></i> Finanças</a>
+        <li class="nav-item mb-3">
+          <a class="sidebar-link bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-100 py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'financas' %}">
+            <i class="fa-solid fa-wallet me-2"></i>Finanças
+          </a>
         </li>
-        <li class="nav-item mb-4">
-            <a class="sidebar-link bg-gradient bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-full py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}" aria-current="page"><i class="fa-solid fa-boxes-stacked me-2"></i> Estoque</a>
+        <li class="nav-item mb-3">
+          <a class="sidebar-link bg-white text-dark-emphasis fs-6 fw-bold text-center d-block w-100 py-2 text-decoration-none shadow-sm rounded-1" href="{% url 'estoque' %}">
+            <i class="fa-solid fa-boxes-stacked me-2"></i>Estoque
+          </a>
         </li>
       </ul>
-      
+  
       {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="btn text-decoration-none fs-5 mt-auto">
+        <a href="{% url 'logout' %}" class="text-decoration-none fs-5 mt-auto mb-2 text-dark">
           sair <i class="fa-solid fa-arrow-right-from-bracket"></i>
         </a>
       {% endif %}
     </div>
   </nav>
+  
 
   <nav class="navbar navbar-expand-lg border-bottom border-primary border-opacity-10">
     <div class="container-fluid d-flex justify-content-end">
       <button type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-example" class="btn btn-secondary d-md-none me-2">
         <i class="fa fa-bars"></i>
       </button>
-
-
-
-
-
-      
-
-
-
-
-
-
     </div>
   </nav>
 

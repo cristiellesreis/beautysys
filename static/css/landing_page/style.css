@@ -1,5 +1,6 @@
 :root{
-    --primary-bright-red: hsl(342, 98%, 24%);    
+    --primary-bright-red: hsl(342, 98%, 24%); 
+    --secundary-color-hover: hsl(342, 61%, 56%);   
     --primary-dark-blue: hsl(228, 39%, 23%);
 
     --neutral-dark-grayish-blue: hsl(227, 12%, 61%);
@@ -20,10 +21,20 @@ main{
     justify-content: center;
 }
 
-body{
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+a:focus, button:focus {
+    outline: 3px solid #780124;
+    outline-offset: 2px;
 }
 
 .hide{
@@ -52,14 +63,14 @@ body{
     display: flex;
     justify-content: center;
     list-style: none;
-    margin-left: 13rem;
+    margin: 0 0 0 13rem;
 }
 
 .nav-item{
     margin: 0 15px;
 }
 
-.nav-link{
+.nav-list a{
     text-decoration: none;
     font-family: var(--font);
     font-size: .9rem;
@@ -75,7 +86,7 @@ body{
     display: none;
 }
 
-.botao-start, .botao-email, .botao-start-footer{
+.botao-start, .botao-start-footer {
     width: 11rem;
     height: 3rem;
     font-size: 1rem;
@@ -84,23 +95,25 @@ body{
     color: var(--neutral-very-light-gray);
     background-color: var(--primary-bright-red);
     border-radius: 2rem;
-    border:none;
+    border: none;
     box-shadow: 0px 8px 15px -5px var(--primary-bright-red);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;        
+    text-align: center;           
 }
 
-.botao-email{
-    width: 4rem;
-    box-shadow: none;
+.botao-start-footer{
+    background-color: var(--neutral-very-light-gray);
+    color: var(--primary-bright-red);
 }
 
-.botao-email:hover{
-    background-color: var(--primary-bright-red);
+.botao-start:hover, .botao-start-footer:hover {
+    opacity: 0.9;
 }
 
-.botao-start:hover{
-    opacity: .60;
-}
 
 .conteudo-intro, .conteudo-info{
     display: grid;
@@ -115,7 +128,6 @@ body{
 
 .container-intro{
     width: 22rem;
-    margin-bottom: 3rem;
 }
 
 .conteudo-info{
@@ -154,13 +166,13 @@ body{
     color: var(--neutral-dark-grayish-blue);
     font-size: 16px;
     line-height: 1.5rem;
-    margin-top: 1.5rem;
+    margin: 3rem 0 3rem 0;
 }
 
 .item-topico p{
-    padding-left: 5rem;
-    width: 28rem;
+    margin-top: 0;
 }
+
 
 .container-intro button{
     margin-top: 2rem;
@@ -189,32 +201,17 @@ body{
     display: flex;
     gap: 1rem;
     align-items: center;
-}
-
-.carrossel{
-    width: 1096px;
-    overflow-x: auto;
-}
-
-.carrossel::-webkit-scrollbar{
-    display: none;
-}
-
-.cards{
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin: 2rem 0 0 1rem;
+    flex-direction: column;
 }
 
 .card-user{
     background-color: var(--neutral-very-light-gray);
-    width: 30rem;
+    width: 100%;
     height: 20rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5rem;
+    margin: 3rem 0 3rem 0;
     border-radius: 2rem;
 }
 
@@ -234,12 +231,12 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 12rem;
     margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 
 .comentarios button{
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 .rodape-banner{
@@ -263,7 +260,7 @@ body{
 }
 
 .botao-start-footer :hover{
-    color:#d34972;
+    color:var(--secundary-color-hover);
 }
 
 .rodape{
@@ -290,39 +287,12 @@ body{
 
 .svg-img{
     text-decoration: none;
-    color: #ffffff;
+    color: var(--neutral-very-light-gray);
 }
 
 .svg-img:hover {
     filter: brightness(0) saturate(100%) invert(11%) sepia(43%) saturate(6538%) hue-rotate(330deg) brightness(81%) contrast(108%);
 }
-
-.rodape-email{
-    width: 20rem;
-    text-align: end;
-}
-
-.email{
-    margin-bottom: 3rem;
-}
-
-.email input{
-    height: 2.5rem;
-    width: 15rem;
-    border-radius: 1.5rem;
-    border: none;
-    text-align: center;
-    font-family: var(--font);
-    margin-right: .5rem;
-}
-
-.copyright{
-    color: var(--neutral-very-light-gray);
-    font-family: var(--font);
-    opacity: .6;
-    font-size:13px;
-}
-
 
 footer{
     width: 100%;
@@ -331,10 +301,7 @@ footer{
 @media screen and (max-width: 600px) {
 
     body{
-        background-image: url(/images/bg-simplify-section-desktop.svg);
-        background-position: top center;
-        background-repeat: repeat-y;
-        background-size: auto;
+        width: 100vw;
     }
 
     .nav-bar{
@@ -356,15 +323,6 @@ footer{
         display: none;
     }
 
-    .nav-link{
-        font-size: 1.2rem;
-    }
-    
-
-    .login-button{
-        display: none;
-    }
-
     .mobile-menu-icon{
         display: block;
     }
@@ -379,7 +337,16 @@ footer{
         display: flex;
         flex-direction: column;
         text-align: center ;
-        margin: 3rem 0rem 1rem 0rem;    
+        margin: 3rem 0rem 1rem 0rem;  
+        padding: 0;  
+    }
+
+    .menu-mobile a{
+        text-decoration: none;
+        font-family: var(--font);
+        font-size: .9rem;
+        color: var(--primary-dark-blue);
+        font-weight: bold;
     }
 
     .menu-mobile .nav-item{
@@ -390,15 +357,15 @@ footer{
         width: 87%;
         margin: 2rem 0rem 0rem 1.5rem;
         display: none;
-        background-color: #ffffff;
+        background-color: var(--neutral-very-light-gray);
         border-radius: .5rem;
         box-shadow: .3px .3px 1px;
         position:absolute;
         z-index: 2000;
     }
 
-    .open{
-        display:block;
+    .menu-mobile.open {
+        display: block;
     }
 
     .icon{
@@ -412,17 +379,27 @@ footer{
         margin: 0 2rem;
     }
 
+    .login-button{
+        display: none;
+    }
+
+    .botao-start-mobile{
+        display: flex; 
+        justify-content: center;
+    }
+
     .conteudo-intro, .conteudo-info{
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         justify-items: center;
         text-align: center;
-        margin-top: 1rem;
+        margin-top: 3rem;
     }
 
     .conteudo-info{
         align-items: center;
         flex-direction: column;
+        margin-top: 4rem;
     }
 
     .conteudo-intro img{
@@ -432,7 +409,7 @@ footer{
     .container-topicos{
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
         margin-bottom: 2rem;
         justify-content: center;
     }
@@ -444,7 +421,6 @@ footer{
         justify-content: center;
         display: flex;
         flex-direction: column;
-        margin-top: 2rem;
     }
 
     .item-topico{
@@ -454,53 +430,12 @@ footer{
 
     .item-topico p{
         width: 20rem;
-        padding: 0 1rem;
-        text-align: left;
-    }
-
-    .carrossel{
-        width: 375px;
-        overflow: hidden;
-    }
-
-    .slides {
-        display: flex;
-        transition: transform 0.5s ease;
-    }
-
-    .slide {
-        flex: 0 0 100%;
-        width: 100%;
-    }
-
-    .indicators {
-        display: flex;
-        justify-content: center;
-        margin-top: 2rem;
-    }
-
-    .indicator {
-        width: 8px;
-        height: 8px;
-        background-color: white;
-        border: 1px solid var(--primary-bright-red);
-        border-radius: 50%;
-        margin: 0 3px;
-        cursor: pointer;
-    }
-      
-    .indicator.active {
-        background-color: var(--primary-bright-red);
-    }
-
-    .cards{
-        gap: 0rem;
-        margin: 2rem 0 0 0rem;
+        text-align: center;
     }
 
     .card-user{
         width: 100%;
-        height: 20rem;
+        height: 25rem;
         margin-top: 3rem;
     }
 
@@ -510,6 +445,7 @@ footer{
 
     .comentarios{
         margin-bottom: 5rem;
+        width: 23rem;
     }
     .comentarios h2{
         text-align: center;
@@ -536,26 +472,12 @@ footer{
         justify-content: center;
     }
 
-    .rodape-email{
-        position: absolute;
-        display: flex;
-        align-content: space-between;
-        flex-direction: column;
-        gap: 21rem;
-        align-items: center;
-    }
-
     .logo-icones{
         display: flex;
         position: relative;
         flex-direction: column;
         justify-content: flex-start;
         height: 7rem;
-    }
-
-    .email input{
-        height: 2.5rem;
-        width: 15rem;
     }
 
     .icones-redes{

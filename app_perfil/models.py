@@ -10,6 +10,9 @@ class Perfil(models.Model):
     cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=2)
     cep = models.CharField(max_length=10)
+    imagem = models.ImageField(upload_to='perfil/', blank=True, null=True)
+
+    objects: models.Manager["Perfil"]
 
     def __str__(self):
         return f"Perfil de {self.user.username}"

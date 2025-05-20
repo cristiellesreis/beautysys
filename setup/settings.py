@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app_perfil.context_processors.perfil_usuario',
             ],
         },
     },
@@ -84,6 +85,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'setup.wsgi.application'
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
 
 
 # Database
@@ -137,3 +139,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+AWS_ACCESS_KEY_ID = 'COLOCAR_ID'
+AWS_SECRET_ACCESS_KEY = 'COLOCAR_KEY'
+AWS_REGION_NAME = 'sa-east-1'

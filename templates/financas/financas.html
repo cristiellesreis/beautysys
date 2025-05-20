@@ -3,79 +3,70 @@
 {% load static %}
 {% load shared_tags %}
 
-<section class="p-3 m-3">
+<section class="p-3 m-3" aria-labelledby="titulo-resumo">
 
   {% nav_menu "Resumo=financas,Receitas=listar_receitas,Despesas=listar_despesas" %}
 
   <div class="content mb-5">
     <div class="container p-0 m-0">
-      <h1 class="fw-normal text-body-emphasis">Resumo Financeiro</h1>
-      <p class="text-muted">
+      <h1 tabindex="0" id="titulo-resumo" class="fw-normal text-body-emphasis">Resumo Financeiro</h1>
+      <p tabindex="0" class="text-muted">
         Confira os principais dados financeiros do seu salão, incluindo receitas, despesas e margem de lucro do mês.
       </p>
     </div>
   </div>
 
   <div style="max-width: 1000px;">
-    <div class="form-group mb-5" style="max-width: 220px;">
-      <label for="periodo" class="form-label">Selecione o Período:</label>
-      <select id="periodo" class="form-select">
-          <option value="mensal">Mensal</option>
-          <option value="anual">Anual</option>
-      </select>
-    </div>
+
     <div class="container m-0 p-0">
-      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 align-items-stretch">
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 align-items-stretch" role="region" aria-label="Resumo de Indicadores Financeiros">
+        
         <div class="col">
-          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #20C8A7, #A0E7D1);">
+          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #20C8A7, #A0E7D1);" tabindex="0" role="group" aria-label="Total da Receita">
             <div class="card-body d-flex align-items-center gap-4">
-              <i class="fa-solid fa-hand-holding-dollar fa-2x text-white"></i>
+              <i class="fa-solid fa-hand-holding-dollar fa-2x text-white" aria-hidden="true"></i>
               <div>
                 <p class="card-text mb-1 text-white">Total da Receita</p>
-                <h5 class="card-title mb-1 fs-4 text-white">R$ 150,00</h5>
-                <small class="text-white-50">+10% em relação ao mês passado</small>
+                <h2 class="h5 card-title mb-1 fs-4 text-white">R$ {{ total_receita_mes|floatformat:2 }}</h5>
               </div>
             </div>
           </div>
         </div>
-      
+
         <div class="col">
-          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #fc5c5c, #f89696);">
+          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #fc5c5c, #f89696);" tabindex="0" role="group" aria-label="Total de Despesas">
             <div class="card-body d-flex align-items-center gap-4">
-              <i class="fa-solid fa-money-bill-wave fa-2x text-white"></i>
+              <i class="fa-solid fa-money-bill-wave fa-2x text-white" aria-hidden="true"></i>
               <div>
-                <p class="card-text mb-1 text-white">Total da Despesas</p>
-                <h5 class="card-title mb-1 fs-4 text-white">R$ 90,00</h5>
-                <small class="text-white-50">+10% em relação ao mês passado</small>
+                <p class="card-text mb-1 text-white">Total das Despesas</p>
+                <h2 class="h5 card-title mb-1 fs-4 text-white">R$ {{ total_despesa_mes|floatformat:2 }}</h5>
               </div>
             </div>
           </div>
         </div>
-      
+
         <div class="col">
-          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #208ac8, #76c0eb);">
+          <div class="card shadow-sm h-100" style="background: linear-gradient(135deg, #208ac8, #76c0eb);" tabindex="0" role="group" aria-label="Margem de Lucro">
             <div class="card-body d-flex align-items-center gap-4">
-              <i class="fa-solid fa-chart-line fa-2x text-white"></i>
+              <i class="fa-solid fa-chart-line fa-2x text-white" aria-hidden="true"></i>
               <div>
                 <p class="card-text mb-1 text-white">Margem de Lucro</p>
-                <h5 class="card-title mb-1 fs-4 text-white">R$ 100,00</h5>
-                <small class="text-white-50">+10% em relação ao mês passado</small>
+                <h2 class="h5 card-title mb-1 fs-4 text-white">R$ {{ margem_lucro|floatformat:2 }}</h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
 
-      <div class="container card shadow mt-4 p-0">
-        <div class="card-header text-white" style="background-color: #911b36;">
-          <h5 class="card-title mb-0">Resumo Financeiro Mensal</h5>
+      <div class="container card shadow mt-4 p-0" role="region" aria-labelledby="grafico-titulo">
+        <div class="card-header text-white" style="background-color: #780124;">
+          <h2 id="grafico-titulo" class="h5 card-title mb-0">Resumo Financeiro Mensal</h5>
         </div>
         <div class="card-body">
           <div class="col-12">
             <div class="w-100">
-              <h6 class="card-title mb-3 text-center">Comparativo de Receitas e Despesas</h6>
-              <div id="graficoFinanceiro" style="width: 100%; height: 300px;"></div>
+              <h2 class="h6 card-title mb-3 text-center">Comparativo de Receitas e Despesas</h6>
+              <div id="graficoFinanceiro" style="width: 100%; height: 300px;" role="img" aria-label="Gráfico comparativo de receitas e despesas mensais"></div>
             </div>
           </div>
         </div>
@@ -85,12 +76,9 @@
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
     </div>
   </div>
-
 </section>
 
 <script src="{% static 'js/financas/script.js' %}"></script>
-
 {% endblock %}
