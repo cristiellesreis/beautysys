@@ -29,7 +29,13 @@ SECRET_KEY = 'django-insecure-n120uon2r)rokrj_beqn)d^4sl9-ucn6=0@%=_oktk2d@zl(58
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.163.133.149', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    '54.163.133.149',
+    'localhost',
+    '127.0.0.1',
+    '3.221.253.73',
+    'studycenterhub.online',
+    'www.studycenterhub.online',]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
